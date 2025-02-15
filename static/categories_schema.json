@@ -1,0 +1,398 @@
+{
+  "Stacks": {
+    "areas": [
+      {
+        "name": "Stacks General",
+        "info": {
+          "DRY STORAGE - PAPER & PACKAGING": {
+            "item_id": "1825",
+            "name": "COFFEE FILTER 1.5 GL (STACKS KITCHEN)",
+            "unit_sz": "500/CASE"
+          },
+          "PC DRESSING": {
+            "item_id": "3734",
+            "name": "PC DRESS VIN BALSAMIC",
+            "unit_sz": "CASE"
+          },
+          "DRY STORAGE - FOOD": {
+            "item_id": "147",
+            "name": "CHOPPED CLAMS CANNED",
+            "unit_sz": "CS"
+          },
+          "WALK-IN (DELI)": {
+            "item_id": "1767",
+            "name": "DELI - PROSCIUTTO (PORK)",
+            "unit_sz": "LB"
+          },
+          "WALK-IN FREEZER/COOLER  (MEATS)": {
+            "item_id": "0679",
+            "name": "BEEF GROUND FRESH",
+            "unit_sz": "LB"
+          },
+          "WALK-IN FREEZER": {
+            "item_id": "6728",
+            "name": "WINGS - HALAL",
+            "unit_sz": "LB"
+          },
+          "WALK-IN": {
+            "item_id": "1963",
+            "name": "SUSHI TUNA",
+            "unit_sz": "LB"
+          },
+          "WINE / BEER / LIQUOR": {
+            "item_id": "2746",
+            "name": "LIQUOR - BRANDY",
+            "unit_sz": "750 ML"
+          },
+          "SUPPLIES": {
+            "item_id": "4495",
+            "name": "CLNR ECL OASIS FLOOR AMMONIATED",
+            "unit_sz": "2.5GL"
+          }
+        }
+      },
+      {
+        "name": "Bakery",
+        "info": {
+          "WALK-IN FREEZER (BAKERY)": {
+            "item_id": "1793",
+            "name": "GRANOLA",
+            "unit_sz": "10LB/BAG"
+          },
+          "SPECIALS: DESSERT": {
+            "item_id": "2516",
+            "name": "APRIL/MAY: IND LEMON BERRY CHEESECAKE",
+            "unit_sz": "EACH"
+          },
+          "SPECIALS: MUFFIN/SCONE": {
+            "item_id": "2941",
+            "name": "APRIL/MAY: LEMON COCONUT MUFFIN",
+            "unit_sz": "1/2 DZ"
+          }
+        }
+      },
+      {
+        "name": "Dairy",
+        "info": {
+          "WALK-IN (CREAMERY)": {
+            "item_id": "7001",
+            "name": "ICED MOCHA - CHUG",
+            "unit_sz": "18/CS"
+          },
+          "CREAMERY - ICE CREAM": {
+            "item_id": "4299",
+            "name": "CHOCOLATE 5.3 0Z",
+            "unit_sz": ""
+          }
+        }
+      },
+      {
+        "name": "Grab & Go",
+        "info": {
+          "CREAMERY - ICE CREAM": {
+            "item_id": "54167",
+            "name": "BRKFST - BAGEL",
+            "unit_sz": "-"
+          }
+        }
+      },
+      {
+        "name": "PRODUCE",
+        "info": {
+          "WALK-IN PRODUCE (FRESH CUT)": {
+            "item_id": "2489",
+            "name": "PRD PEPPER GREEN DICED",
+            "unit_sz": "LB"
+          },
+          "WALK-IN PRODUCE": {
+            "item_id": "1605",
+            "name": "POT SWEET (YAM) PEELED & DICED",
+            "unit_sz": "LB"
+          }
+        }
+      }
+    ]
+  },
+  "Outpost": {
+    "areas": [
+      {
+        "name": "Outpost Main Order",
+        "info": {
+          "DRY STORAGE - PAPER & PACKAGING": {
+            "item_id": "4973",
+            "name": "LID PLSTC SOUFFLE 4 OZ (HOT)",
+            "unit_sz": "CASE"
+          },
+          "DRY STORAGE - FOOD": {
+            "item_id": "1422",
+            "name": "BANANA PEPPERS",
+            "unit_sz": "CASE"
+          },
+          "WALK-IN FREEZER (MEATS)": {
+            "item_id": "554",
+            "name": "CHIX BRST FILET BRD SLIDER",
+            "unit_sz": "CASE"
+          },
+          "WALK-IN FREEZER": {
+            "item_id": "582",
+            "name": "JUICE LIME FROZEN",
+            "unit_sz": "QT"
+          },
+          "WALK-IN": {
+            "item_id": "1400",
+            "name": "GREEK YOGURT 0% FAT",
+            "unit_sz": "CASE"
+          },
+          "SUPPLIES": {
+            "item_id": "4495",
+            "name": "CLNR ECL OASIS FLOOR AMMONIATED",
+            "unit_sz": "2.5GL"
+          }
+        }
+      },
+      {
+        "name": "PRODUCE",
+        "info": {
+          "WALK-IN PRODUCE (FRESH CUT)": {
+            "item_id": "0799",
+            "name": "CARROT MATCH STICKS",
+            "unit_sz": "LB"
+          },
+          "WALK-IN PRODUCE": {
+            "item_id": "4318",
+            "name": "PRD VEG TOMATO ROMA",
+            "unit_sz": "LB"
+          }
+        }
+      },
+      {
+        "name": "Dairy",
+        "info": {
+          "WALK-IN (CREAMERY)": {
+            "item_id": "3502",
+            "name": "MILK 1/2 GAL WHL",
+            "unit_sz": "EACH"
+          }
+        }
+      },
+      {
+        "name": "Bakery",
+        "info": {
+          "WALK-IN FREEZER (BAKERY)": {
+            "item_id": "0704",
+            "name": "PANNINI BREAD",
+            "unit_sz": "LOAF"
+          },
+          "CROISSANTS": {
+            "item_id": "2155",
+            "name": "CHOC CHIP COOKIE CROISSANT",
+            "unit_sz": "1/2 DZ"
+          },
+          "DONUTS": {
+            "item_id": "2669",
+            "name": "BKY A DBL CHOC GANACHE",
+            "unit_sz": "1/2 DZ"
+          },
+          "MUFFINS": {
+            "item_id": "2104",
+            "name": "BKY A MUFFIN CHOC CHIP",
+            "unit_sz": "1/2 DZ"
+          },
+          "DANISH": {
+            "item_id": "2065",
+            "name": "CINNAMON BRIOCHE DANISH",
+            "unit_sz": "1/2 DZ"
+          },
+          "LOAF CAKES": {
+            "item_id": "2601",
+            "name": "PUMPKIN BREAD",
+            "unit_sz": "EACH"
+          },
+          "BARS & COOKIES": {
+            "item_id": "2132",
+            "name": "WHOOPIE PIE BL/WH",
+            "unit_sz": "DOZEN"
+          }
+        }
+      }
+    ]
+  },
+  "Provisions": {
+    "areas": [
+      {
+        "name": "Starbucks",
+        "info": {
+          "Coffee": {
+            "item_id": "6212",
+            "name": "STB COFFEE WB ESPRESSO 5LB",
+            "unit_sz": "CASE"
+          },
+          "SYRUPS/SAUCES": {
+            "item_id": "3341",
+            "name": "STB BROWN SUGAR SYRUP (SEASONAL)",
+            "unit_sz": "6/CASE"
+          },
+          "Tea": {
+            "item_id": "4578",
+            "name": "TEA BLACK",
+            "unit_sz": "CASE"
+          },
+          "MILK/CONCENTRATES": {
+            "item_id": "1533",
+            "name": "STB BEV BASE PINEAPPLE PASSION FRUIT",
+            "unit_sz": "CASE"
+          },
+          "Misc": {
+            "item_id": "1532",
+            "name": "STB FRU DRIED PINEAPPLE",
+            "unit_sz": "CASE"
+          },
+          "Supplies": {
+            "item_id": "1021",
+            "name": "CLNR ECL TRUPOWER RINSE ADD",
+            "unit_sz": "4 -1/GL CS"
+          },
+          "Non Starbucks Items": {
+            "item_id": "1021",
+            "name": "RINSE DRY  (Provisions ONLY)",
+            "unit_sz": "4/1 G"
+          }
+        }
+      },
+      {
+        "name": "Warehouse",
+        "info": {
+          "GROCERY": {
+            "item_id": "7752",
+            "name": "SUAVE HAND LOTION 3 OZ",
+            "unit_sz": ""
+          },
+          "WALK-IN COOLER": {
+            "item_id": "5712",
+            "name": "OIKOS BLUEBERRY YOGURT",
+            "unit_sz": ""
+          },
+          "WALK-IN FREEZER": {
+            "item_id": "3596",
+            "name": "INNOVASIAN - SHUMAI PORK",
+            "unit_sz": ""
+          },
+          "SALADS & SANDWICHES": {
+            "item_id": "54192",
+            "name": "DESSERT CANNOLI DIPPER",
+            "unit_sz": ""
+          },
+          "CREAMERY - DAIRY": {
+            "item_id": "52427",
+            "name": "TUMBLER",
+            "unit_sz": ""
+          },
+          "CREAMERY - ICE CREAM": {
+            "item_id": "7740",
+            "name": "WPSX COFFEE PINTS",
+            "unit_sz": ""
+          },
+          "ICE CREAM SANDWICHES": {
+            "item_id": "",
+            "name": "STRAWBERRY",
+            "unit_sz": ""
+          },
+          "BAKERY": {
+            "item_id": "2922",
+            "name": "BAKERY TUMBLER/PRO BAR PACKAGE",
+            "unit_sz": "EACH"
+          },
+          "PSML": {
+            "item_id": "4391",
+            "name": "DELI SALAMI FINOCCHIONA",
+            "unit_sz": "LB"
+          }
+        }
+      }
+    ]
+  },
+  "Biscotti": {
+    "areas": [
+      {
+        "name": "Bakery",
+        "info": {
+          "WALK-IN FREEZER (BAKERY)": {
+            "item_id": "0704",
+            "name": "PANNINI BREAD",
+            "unit_sz": "LOAF"
+          },
+          "CROISSANTS": {
+            "item_id": "2155",
+            "name": "CHOC CHIP COOKIE CROISSANT",
+            "unit_sz": "1/2 DZ"
+          },
+          "DONUTS": {
+            "item_id": "2669",
+            "name": "BKY A DBL CHOC GANACHE",
+            "unit_sz": "1/2 DZ"
+          },
+          "MUFFINS": {
+            "item_id": "2104",
+            "name": "BKY A MUFFIN CHOC CHIP",
+            "unit_sz": "1/2 DZ"
+          },
+          "DANISH": {
+            "item_id": "2065",
+            "name": "CINNAMON BRIOCHE DANISH",
+            "unit_sz": "1/2 DZ"
+          },
+          "LOAF CAKES": {
+            "item_id": "2601",
+            "name": "PUMPKIN BREAD",
+            "unit_sz": "EACH"
+          },
+          "BARS & COOKIES": {
+            "item_id": "2132",
+            "name": "WHOOPIE PIE BL/WH",
+            "unit_sz": "DOZEN"
+          }
+        }
+      },
+      {
+        "name": "Starbucks",
+        "info": {
+          "Coffee": {
+            "item_id": "6212",
+            "name": "STB COFFEE WB ESPRESSO 5LB",
+            "unit_sz": "CASE"
+          },
+          "SYRUPS/SAUCES": {
+            "item_id": "3341",
+            "name": "STB BROWN SUGAR SYRUP (SEASONAL)",
+            "unit_sz": "6/CASE"
+          },
+          "Tea": {
+            "item_id": "4578",
+            "name": "TEA BLACK",
+            "unit_sz": "CASE"
+          },
+          "MILK/CONCENTRATES": {
+            "item_id": "1533",
+            "name": "STB BEV BASE PINEAPPLE PASSION FRUIT",
+            "unit_sz": "CASE"
+          },
+          "Misc": {
+            "item_id": "1532",
+            "name": "STB FRU DRIED PINEAPPLE",
+            "unit_sz": "CASE"
+          },
+          "Supplies": {
+            "item_id": "1021",
+            "name": "CLNR ECL TRUPOWER RINSE ADD",
+            "unit_sz": "4 -1/GL CS"
+          },
+          "Non Starbucks Items": {
+            "item_id": "1021",
+            "name": "RINSE DRY  (BISCOTTI ONLY)",
+            "unit_sz": "4/1 G"
+          }
+        }
+      }
+    ]
+  }
+}
