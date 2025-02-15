@@ -1,23 +1,24 @@
+const BASE_URL = "http://localhost:3000"
 // Function to preserve and transfer query parameters
 function navigateWithQueries(path, newParams = {}) {
-  // Get current URL parameters
-  const currentParams = new URLSearchParams(window.location.search);
+    // Get current URL parameters
+    const currentParams = new URLSearchParams(window.location.search)
 
-  // Add new parameters while preserving existing ones
-  Object.entries(newParams).forEach(([key, value]) => {
-    currentParams.set(key, value);
-  });
+    // Add new parameters while preserving existing ones
+    Object.entries(newParams).forEach(([key, value]) => {
+        currentParams.set(key, value)
+    })
 
-  // Create the new URL with all parameters
-  const queryString = currentParams.toString();
-  const newUrl = path + (queryString ? `?${queryString}` : "");
+    // Create the new URL with all parameters
+    const queryString = currentParams.toString()
+    const newUrl = path + (queryString ? `?${queryString}` : "")
 
-  // Navigate to the new URL
-  window.location.href = newUrl;
+    // Navigate to the new URL
+    window.location.href = newUrl
 }
 
 function getNext() {
-    const currentParams = new URLSearchParams(window.location.search);
+    const currentParams = new URLSearchParams(window.location.search)
     return currentParams.get("next")
 }
 
@@ -25,28 +26,30 @@ async function apiCallPost(url, body) {
     return fetch(url, {
         method: "POST",
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
         },
         credentials: "include",
         body,
     })
 }
 
-
 async function apiCallGet(url) {
     return fetch(url, {
         method: "GET",
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
         },
         credentials: "include",
     })
 }
 
 function setToken(token) {
-    document.cookie = `token=${token}; Path=/`;
+    document.cookie = `token=${token}; Path=/`
 }
 
 function getToken() {
-    return document.cookie.split("; ").find(row => row.startsWith("token="))?.split("=")[1];
+    return document.cookie
+        .split("; ")
+        .find((row) => row.startsWith("token="))
+        ?.split("=")[1]
 }
