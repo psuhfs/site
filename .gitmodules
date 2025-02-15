@@ -1,0 +1,3 @@
+[submodule "stockon"]
+	path = stockon
+	url = https://github.com/psuhfs/stockon
