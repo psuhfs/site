@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 next = "/dashboard"
             }
 
-            const response = await apiCall("http://localhost:3002/auth/signup", JSON.stringify({
+            const response = await apiCallPost("http://localhost:3002/auth/signup", JSON.stringify({
                 username: username.value,
                 email: email.value,
                 password: password.value,

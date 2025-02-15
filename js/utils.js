@@ -21,7 +21,7 @@ function getNext() {
     return currentParams.get("next")
 }
 
-async function apiCall(url, body) {
+async function apiCallPost(url, body) {
     return fetch(url, {
         method: "POST",
         headers: {
@@ -29,6 +29,17 @@ async function apiCall(url, body) {
         },
         credentials: "include",
         body,
+    })
+}
+
+
+async function apiCallGet(url) {
+    return fetch(url, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        credentials: "include",
     })
 }
 

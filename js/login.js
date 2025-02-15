@@ -1,14 +1,28 @@
 // Handle form submission
 document.addEventListener("DOMContentLoaded", async () => {
-    let next = getNext()
+    // WARN: DO NOT ADD ANY CODE ABOVE submitHandler() CALL.
+    // explanation: upon submitting form, the redirection might add email and password publicly, in queries,
+    // so we must wait for submitHandler to initiate before we add ANY code.
+    submitHandler();
+
+    const loginHref = document.getElementById("signupHref")
+    loginHref.addEventListener("click", async (e) => {
+        e.preventDefault()
+
+        navigateWithQueries("/signup")
+    });
+    let next = getNext();
     if (!next) {
         // TODO: need to build dashboard
         next = "/dashboard"
     }
 
-    if ((await apiCall("http://localhost:3002/auth/authenticated", {})).ok) {
+    if ((await apiCallGet("http://localhost:3002/auth/authenticated")).ok) {
         window.location.href = next;
     }
+});
+
+function submitHandler() {
     const loginForm = document.getElementById("loginForm")
 
     loginForm.addEventListener("submit", async (e) => {
@@ -18,7 +32,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         const password = document.getElementById("password").value
 
         try {
-            const response = await apiCall("http://localhost:3002/auth/signin", JSON.stringify({
+            const response = await apiCallPost("http://localhost:3002/auth/signin", JSON.stringify({
                 username,
                 password,
             }));
@@ -34,12 +48,5 @@ document.addEventListener("DOMContentLoaded", async () => {
             alert("Something went wrong, please try again. If the problem persists, please contact support.");
             console.error("Login error:", error)
         }
-    })
-
-    const loginHref = document.getElementById("signupHref")
-    loginHref.addEventListener("click", async (e) => {
-        e.preventDefault()
-
-        navigateWithQueries("/signup")
-    })
-})
+    });
+}
