@@ -23,6 +23,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 function submitHandler() {
+    let next = getNext();
+    if (!next) {
+        // TODO: need to build dashboard
+        next = "/dashboard"
+    }
+
     const loginForm = document.getElementById("loginForm")
 
     loginForm.addEventListener("submit", async (e) => {
