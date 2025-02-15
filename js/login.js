@@ -1,5 +1,14 @@
 // Handle form submission
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
+    let next = getNext()
+    if (!next) {
+        // TODO: need to build dashboard
+        next = "/dashboard"
+    }
+
+    if ((await apiCall("http://localhost:3002/auth/authenticated", {})).ok) {
+        window.location.href = next;
+    }
     const loginForm = document.getElementById("loginForm")
 
     loginForm.addEventListener("submit", async (e) => {
@@ -9,11 +18,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const password = document.getElementById("password").value
 
         try {
-            let next = getNext()
-            if (!next) {
-                // TODO: need to build dashboard
-                next = "/dashboard"
-            }
             const response = await apiCall("http://localhost:3002/auth/signin", JSON.stringify({
                 username,
                 password,

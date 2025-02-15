@@ -5,7 +5,6 @@ document.addEventListener("DOMContentLoaded", () => {
         navigateWithQueries("/login");
     }
 
-
     const signupForm = document.getElementById("signupForm")
     const email = document.getElementById("email")
     const username = document.getElementById("username")
