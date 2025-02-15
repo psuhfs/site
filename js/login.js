@@ -1,31 +1,41 @@
 // Handle form submission
-document.addEventListener('DOMContentLoaded', () => {
-    const loginForm = document.getElementById('loginForm');
-    
-    loginForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
-        
+document.addEventListener("DOMContentLoaded", () => {
+    const loginForm = document.getElementById("loginForm")
+
+    loginForm.addEventListener("submit", async (e) => {
+        e.preventDefault()
+
+        const username = document.getElementById("username").value
+        const password = document.getElementById("password").value
+
         try {
-            // Here you would typically make an API call
-            // For demonstration, we'll just pass the email as a query parameter
-            navigateWithQueries('/dashboard', { 
-                email: email,
-                // Add any other parameters you want to preserve or add
-                login_timestamp: new Date().toISOString()
-            });
+            let next = getNext()
+            if (!next) {
+                // TODO: need to build dashboard
+                next = "/dashboard"
+            }
+            const response = await apiCall("http://localhost:3002/auth/signin", JSON.stringify({
+                username,
+                password,
+            }));
+
+            const data = await response.json()
+            if (!response.ok) {
+                alert("Invalid credentials")
+            } else {
+                document.cookie = `token=${data["token"]}`;
+                window.location.href = next;
+            }
         } catch (error) {
-            console.error('Login error:', error);
-            // Handle error appropriately
+            alert("Something went wrong, please try again. If the problem persists, please contact support.");
+            console.error("Login error:", error)
         }
-    });
+    })
 
-    const loginHref = document.getElementById('signupHref');
-    loginHref.addEventListener('click', async (e) => {
-        e.preventDefault();
+    const loginHref = document.getElementById("signupHref")
+    loginHref.addEventListener("click", async (e) => {
+        e.preventDefault()
 
-        navigateWithQueries('/signup');
-    });
-});
+        navigateWithQueries("/signup")
+    })
+})
