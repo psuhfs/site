@@ -2,7 +2,7 @@ const BASE_URL = "http://localhost:3000"
 
 // Function to preserve and transfer query parameters
 function navigateWithQueries(path, newParams = {}) {
-    if (path === window.location.href) {
+    if (window.location.href.endsWith(path)) {
         return
     }
     // Get current URL parameters
@@ -20,7 +20,7 @@ function navigateWithQueries(path, newParams = {}) {
 }
 
 function navigate(path) {
-    if (path === window.location.href) {
+    if (window.location.href.endsWith(path)) {
         return
     }
     window.location.href = path
