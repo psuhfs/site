@@ -20,9 +20,10 @@ function navigateWithQueries(path, newParams = {}) {
 }
 
 function navigate(path) {
-    if (window.location.href.endsWith(path)) {
+    if (window.location.pathname.endsWith(path)) {
         return
     }
+
     window.location.href = path
 }
 
