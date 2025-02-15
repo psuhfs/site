@@ -1,22 +1,38 @@
 // Handle form submission
 document.addEventListener("DOMContentLoaded", () => {
+    if (!document.cookie.includes("token")) {
+        alert("You must be logged in to access this page.");
+        navigateWithQueries("/login");
+    }
+
+
     const signupForm = document.getElementById("signupForm")
+    const email = document.getElementById("email")
+    const username = document.getElementById("username")
+    const password = document.getElementById("password");
+    const confirmPassword = document.getElementById("confirmPassword")
+
+    password.value = confirmPassword.value = "temp";
+    let emailManuallyEdited = false
+    email.addEventListener("input", () => {
+        emailManuallyEdited = true
+    })
+
+    // Add listener to username input to update email
+    username.addEventListener("input", (e) => {
+        if (!emailManuallyEdited) {
+            const username = e.target.value
+            email.value = username ? `${username}@psu.edu` : ""
+        }
+    });
 
     signupForm.addEventListener("submit", async (e) => {
         e.preventDefault()
 
-        const email = document.getElementById("email").value
-        let password = document.getElementById("password").value
-        const confirmPassword = document.getElementById("confirmPassword").value
-
         // Basic validation
-        if (password.length > 0 && password !== confirmPassword) {
+        if (password.value !== "temp" && password.value !== confirmPassword) {
             alert("Passwords do not match!")
             return
-        }
-
-        if (password.length === 0) {
-            password = "admin"
         }
 
         try {
@@ -27,8 +43,9 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             const response = await apiCall("http://localhost:3002/auth/signup", JSON.stringify({
-                email,
-                password
+                username: username.value,
+                email: email.value,
+                password: password.value,
             }));
             if (!response.ok) {
                 alert("Something went wrong. Please try again.")

@@ -32,3 +32,10 @@ async function apiCall(url, body) {
     })
 }
 
+function setToken(token) {
+    document.cookie = `token=${token}; Path=/`;
+}
+
+function getToken() {
+    return document.cookie.split("; ").find(row => row.startsWith("token="))?.split("=")[1];
+}

@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (!response.ok) {
                 alert("Invalid credentials")
             } else {
-                document.cookie = `token=${data["token"]}`;
+                setToken(data["token"]);
                 window.location.href = next;
             }
         } catch (error) {
