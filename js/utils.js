@@ -1,6 +1,10 @@
 const BASE_URL = "http://localhost:3000"
+
 // Function to preserve and transfer query parameters
 function navigateWithQueries(path, newParams = {}) {
+    if (path === window.location.href) {
+        return
+    }
     // Get current URL parameters
     const currentParams = new URLSearchParams(window.location.search)
 
@@ -11,10 +15,15 @@ function navigateWithQueries(path, newParams = {}) {
 
     // Create the new URL with all parameters
     const queryString = currentParams.toString()
-    const newUrl = path + (queryString ? `?${queryString}` : "")
-
     // Navigate to the new URL
-    window.location.href = newUrl
+    window.location.href = path + (queryString ? `?${queryString}` : "")
+}
+
+function navigate(path) {
+    if (path === window.location.href) {
+        return
+    }
+    window.location.href = path
 }
 
 function getNext() {

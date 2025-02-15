@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     if ((await apiCallGet(`${BASE_URL}/auth/authenticated`)).ok) {
-        window.location.href = next
+        navigate(next)
     }
 })
 
@@ -51,7 +51,7 @@ function submitHandler() {
                 alert("Invalid credentials")
             } else {
                 setToken(data["token"])
-                window.location.href = next
+                navigate(next)
             }
         } catch (error) {
             alert("Something went wrong, please try again. If the problem persists, please contact support.")

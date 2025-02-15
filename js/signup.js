@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (!response.ok) {
                 alert("Something went wrong. Please try again.")
             } else {
-                window.location.href = next
+                navigate(next)
             }
         } catch (error) {
             console.error("Signup error:", error)
