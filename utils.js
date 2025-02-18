@@ -44,11 +44,11 @@ async function apiCallPost(url, body) {
 }
 
 async function apiCallGet(url) {
-    alert(getToken());
     return fetch(url, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
+            "Authorization": `Bearer ${getToken()}`,
         },
         credentials: "include",
     })
