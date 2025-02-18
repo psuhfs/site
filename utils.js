@@ -52,6 +52,7 @@ async function apiCallGet(url) {
         },
         credentials: "include",
     })
+
 }
 
 function setToken(token) {
