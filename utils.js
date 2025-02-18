@@ -37,6 +37,7 @@ async function apiCallPost(url, body) {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
+            "Authorization": `Bearer ${getToken()}`,
         },
         credentials: "include",
         body,
@@ -52,12 +53,11 @@ async function apiCallGet(url) {
         },
         credentials: "include",
     })
-
 }
 
 function setToken(token) {
     // Set secure cookie with necessary attributes for cross-origin
-    document.cookie = `token=${token}; Path=/; Domain=pshfs.co; SameSite=None; Secure`
+    document.cookie = `token=${token}; Path=/; SameSite=None; Secure`
 }
 
 function getToken() {
