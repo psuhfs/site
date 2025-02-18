@@ -54,8 +54,9 @@ async function apiCallGet(url) {
 }
 
 function setToken(token) {
+    // getToken()
     // Set secure cookie with necessary attributes for cross-origin
-    document.cookie = `token=${token}; Path=/; Domain=pshfs.co; SameSite=None; Secure`
+    // document.cookie = `token=${token}; Path=/; Domain=pshfs.co; SameSite=None; Secure`
 }
 
 function getToken() {
