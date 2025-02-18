@@ -35,12 +35,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         try {
-            let next = getNext()
-            if (!next) {
-                // TODO: need to build dashboard
-                next = "/dashboard"
-            }
-
             const response = await apiCallPost(
                 `${BASE_URL}/auth/signup`,
                 JSON.stringify({
@@ -52,7 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (!response.ok) {
                 alert("Something went wrong. Please try again.")
             } else {
-                navigate(next)
+                alert("Account created successfully!")
             }
         } catch (error) {
             console.error("Signup error:", error)
