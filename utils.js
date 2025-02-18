@@ -44,6 +44,7 @@ async function apiCallPost(url, body) {
 }
 
 async function apiCallGet(url) {
+    alert(getToken());
     return fetch(url, {
         method: "GET",
         headers: {
@@ -54,9 +55,8 @@ async function apiCallGet(url) {
 }
 
 function setToken(token) {
-    // getToken()
     // Set secure cookie with necessary attributes for cross-origin
-    // document.cookie = `token=${token}; Path=/; Domain=pshfs.co; SameSite=None; Secure`
+    document.cookie = `token=${token}; Path=/; Domain=pshfs.co; SameSite=None; Secure`
 }
 
 function getToken() {
