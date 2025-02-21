@@ -1,6 +1,0 @@
-[submodule "stockon"]
-	path = stockon
-	url = https://github.com/psuhfs/stockon
-[submodule "workon"]
-	path = workon
-	url = https://github.com/psuhfs/workon

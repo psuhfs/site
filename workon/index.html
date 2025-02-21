@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Points Tracker</title>
+    <link rel="stylesheet" href="./styles/styles.css" />
+  </head>
+
+  <body>
+    <header></header>
+    <main>
+      <h1>Points Tracker</h1>
+      <br />
+      <form id="points-form" onsubmit="return false;">
+        <div id="form-content" style="display: none">
+          <label for="employee-search">Search Employee:</label>
+          <input type="text" id="employee-search" placeholder="Start typing an employee name..." />
+          <div id="employee-results" class="dropdown-results"></div>
+
+          <div id="employee-id-container" style="display: none">
+            <label for="employee-id">Employee ID:</label>
+            <input type="text" id="employee-id" name="employee-id" placeholder="Enter employee ID" />
+          </div>
+
+          <label for="shift-date">Select Date:</label>
+          <input type="date" id="shift-date" name="shift-date" required />
+
+          <div id="shift-options" class="shift-container">
+            <p>Select a shift or enter details manually below:</p>
+          </div>
+
+          <label for="manual-shift">Manual Shift Entry (if needed):</label>
+          <input type="text" id="manual-shift" name="manual-shift" placeholder="E.g., 9:00 AM - 5:00 PM" />
+
+          <legend>Reason for Points:</legend>
+          <div class="button-group">
+            <button type="button" class="reason-button" onclick="selectReason(this)" points="1">Tardy</button>
+
+            <button type="button" class="reason-button" points="1" onclick="selectReason(this)">
+              Uniform & Grooming Standards
+            </button>
+            <button type="button" class="reason-button" onclick="selectReason(this)" points="4">NCNS</button>
+            <button type="button" class="reason-button" onclick="selectReason(this)" points="3">
+              Unexcused Absence
+            </button>
+            <button type="button" class="reason-button" onclick="selectReason(this)" points="0">Excused Absence</button>
+            <button type="button" class="reason-button" onclick="selectReason(this)" points="1">No ID</button>
+            <button type="button" class="reason-button" onclick="selectReason(this)" points="6">Safety Issue</button>
+            <button type="button" class="reason-button" onclick="selectReason(this)">Other</button>
+          </div>
+
+          <input type="hidden" id="reason" name="reason" required />
+
+          <label for="comments">Comments:</label>
+          <textarea id="comments" name="comments" rows="4" placeholder="Enter additional comments"></textarea>
+          <input type="hidden" id="selected-points" name="selected-points" value="" />
+
+          <button type="submit" id="form-submit" onclick="handleSubmit()">Submit</button>
+        </div>
+      </form>
+    </main>
+  </body>
+
+  <script src="../utils.js"></script>
+  <script src="./js/workon.js"></script>
+  <script src="./js/auth.js"></script>
+</html>

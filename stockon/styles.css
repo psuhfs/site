@@ -1,0 +1,267 @@
+body {
+    background-color: #f8f9fa;
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+    color: #343a40;
+    font-size: 1.75rem;
+}
+
+.nav-tabs .nav-link.active {
+    background-color: #d9534f;
+    color: white;
+}
+
+.tab-content {
+    padding-top: 20px;
+}
+
+table {
+    width: 100%;
+    text-align: left;
+}
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 1.25rem;
+    }
+
+    .table {
+        font-size: 0.875rem;
+    }
+}
+
+.quantity-control {
+    display: flex;
+    align-items: center;
+}
+
+.quantity-up {
+    background-color: #7109f9;
+    color: white;
+    border: none;
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    border-radius: 0 0.5rem 0.5rem 0; 
+    text-align: center;
+    margin: 0;
+    justify-content: center;
+}
+
+.quantity-down {
+    background-color: #7109f9;
+    color: white;
+    border: none;
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    border-radius: 0.5rem 0 0 0.5rem; 
+    text-align: center;
+    margin: 0;
+    justify-content: center;
+}
+
+.quantity-control input {
+    width: 32px;
+    text-align: center;
+    border: none;
+    margin: 0 5px;
+}
+.item-details-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    z-index: 1000;
+    width: 300px;
+}
+
+.item-details-content {
+    position: relative;
+}
+
+.close-popup {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    cursor: pointer;
+    font-size: 20px;
+    color: #000;
+}
+
+.close-popup:hover {
+    color: red;
+}
+
+.item-search-container {
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+}
+
+.item-search-container .d-flex {
+    display: flex;
+    align-items: center;
+}
+
+.item-search-container .form-control {
+    flex-grow: 1;
+}
+
+.me-2 {
+    margin-right: 8px; /* Adds some space between the button and the search bar */
+    flex-shrink: 0;
+} 
+
+.sendOrderInformation {
+    margin: auto;
+    margin-top: 15px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    width: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.sendOrderInformation label {
+    font-weight: bold;
+    color: #333;
+    margin-right: 10px;
+}
+
+.sendOrderInformation input[type="date"] {
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    width: 100%;
+    margin-right: 10px;
+}
+
+.title-menu {
+    display: flex-start;
+    flex-direction: col;
+    align-items: center; /* Center the title */
+    position: relative;  /* Position relative for menu positioning */
+    width: 100%;
+}
+
+.menu {
+    display: none; /* Initially hidden */
+}
+
+.menu-button {
+    cursor: pointer;
+    font-size: 18px;
+    padding: 10px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+.menu-button:hover {
+    background: #0056b3;
+}
+
+.cache-button {
+    display: block;
+    margin-top: 10px;
+    padding: 10px;
+    background: #a72828;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.cache-button:hover {
+    background: #bf3e32;
+}
+
+.selection-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    border: solid 1px #ddd;
+}
+
+.quantity-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.quantity-controls button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    font-weight: bold;
+    margin: 0 10px;
+    transition: background-color 0.3s ease;
+}
+
+.quantity-controls button:hover {
+    background-color: #0056b3;
+}
+
+.quantity-controls .quantity {
+    font-size: 18px;
+    font-weight: bold;
+    min-width: 30px;
+    text-align: center;
+}
+
+.submit-btn {
+    transition: background-color 0.3s ease, transform 0.1s ease;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.submit-btn:hover {
+    background-color: #218838 !important;
+    transform: scale(1.05);
+}
+
+.submit-btn:active {
+    transform: scale(0.95);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Error and Loading States */
+.submit-btn.loading {
+    background-color: #6c757d !important;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.submit-btn.error {
+    background-color: #dc3545 !important;
+    animation: shake 0.5s;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
