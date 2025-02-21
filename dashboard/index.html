@@ -1,42 +1,42 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dashboard</title>
     <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-        }
-        .dashboard-container {
-            display: flex;
-            gap: 20px;
-        }
-        .dashboard-btn {
-            padding: 15px 30px;
-            font-size: 18px;
-            cursor: pointer;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-        }
-        .dashboard-btn:hover {
-            background-color: #45a049;
-        }
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+      }
+      .dashboard-container {
+        display: flex;
+        gap: 20px;
+      }
+      .dashboard-btn {
+        padding: 15px 30px;
+        font-size: 18px;
+        cursor: pointer;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+      }
+      .dashboard-btn:hover {
+        background-color: #45a049;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="dashboard-container">
-        <button class="dashboard-btn" onclick="window.location.href='/stockon'">Stock Management</button>
-        <button class="dashboard-btn" onclick="window.location.href='/workon'">Points System</button>
+      <button class="dashboard-btn" onclick="window.location.href='/stockon'">Stock Management</button>
+      <button class="dashboard-btn" onclick="window.location.href='/workon'">Points System</button>
     </div>
-</body>
+  </body>
 </html>
