@@ -1,4 +1,5 @@
-const BASE_URL = "https://api.ssdd.dev"
+// const BASE_URL = "https://api.ssdd.dev"
+const BASE_URL = "http://localhost:3000"
 
 // Function to preserve and transfer query parameters
 function navigateWithQueries(path, newParams = {}) {
