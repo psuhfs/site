@@ -67,3 +67,8 @@ function getToken() {
     .find((row) => row.startsWith("token="))
     ?.split("=")[1]
 }
+
+function kickOut() {
+  alert("You are not allowed to view this page")
+  navigate("/login")
+}
