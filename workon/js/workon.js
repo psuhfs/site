@@ -84,14 +84,10 @@ function handleSearchEmployee(employeeResponseData) {
 
 async function searchEmployee() {
   try {
-    const responseEmployees = await fetch(`${BASE_URL}/workon/employees`, {
-      method: "GET",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${getToken()}`,
-      },
-    })
+    const responseEmployees = await apiCallGet(`${BASE_URL}/workon/employees`)
+    if (!responseEmployees.ok) {
+      kickOut()
+    }
     const employeeResponseData = await responseEmployees.text()
     console.log("Employee data:", employeeResponseData)
     handleSearchEmployee(JSON.parse(employeeResponseData))
@@ -115,7 +111,7 @@ async function searchEmployee() {
     }
 
     try {
-      const response = await fetch(`${BASE_URL}/workon/employee/${employeeId}/shifts`, {
+      /*      const response = await fetch(`${BASE_URL}/workon/employee/${employeeId}/shifts`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -123,7 +119,14 @@ async function searchEmployee() {
         },
         credentials: "include",
         body: JSON.stringify({date: selectedDate}),
-      })
+      })*/
+      const response = await apiCallPost(
+        `${BASE_URL}/workon/employee/${employeeId}/shifts`,
+        JSON.stringify({date: selectedDate}),
+      )
+      if (!response.ok) {
+        kickOut()
+      }
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`)
@@ -211,7 +214,7 @@ async function handleSubmit() {
   }
 
   try {
-    const response = await fetch(`${BASE_URL}/workon/incr`, {
+    /*    const response = await fetch(`${BASE_URL}/workon/incr`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -219,7 +222,12 @@ async function handleSubmit() {
       },
       credentials: "include",
       body: JSON.stringify(formData),
-    })
+    })*/
+
+    const response = await apiCallPost(`${BASE_URL}/workon/incr`, JSON.stringify(formData))
+    if (!response.ok) {
+      kickOut()
+    }
 
     if (response.ok) {
       alert("Submission successful!")

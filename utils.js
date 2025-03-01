@@ -1,4 +1,5 @@
 const BASE_URL = "https://api.ssdd.dev"
+// const BASE_URL = "http://localhost:3000"
 
 // Function to preserve and transfer query parameters
 function navigateWithQueries(path, newParams = {}) {
@@ -65,4 +66,9 @@ function getToken() {
     .split("; ")
     .find((row) => row.startsWith("token="))
     ?.split("=")[1]
+}
+
+function kickOut() {
+  alert("You are not allowed to view this page")
+  navigate("/login")
 }

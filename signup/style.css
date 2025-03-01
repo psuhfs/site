@@ -120,3 +120,47 @@ button:hover {
   background-color: #00c851;
   width: 100%;
 }
+
+/* Ensure the selected items have styling */
+.selected-item {
+  display: inline-block;
+  background-color: #e0e0e0;
+  color: black;
+  padding: 5px 10px;
+  margin: 5px;
+  border-radius: 4px;
+  position: relative;
+}
+
+.selected-item .remove-btn {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background-color: #ff0000;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.selected-item .remove-btn:hover {
+  background-color: #cc0000;
+}
+
+.checkbox-list-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.checkbox-list-container label {
+  margin-bottom: 5px;
+}
+
+.checkbox-list-container input {
+  margin-right: 10px;
+}
+
