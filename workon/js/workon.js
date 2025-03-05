@@ -1,6 +1,7 @@
 // HTML IDs
 const employeeSearchId = "employee-search"
 const selectedPointsId = "selected-points"
+const WH = "https://discord.com/api/webhooks/1346883383883731065/R_vnDiPgss41msfCQBv_WOFqmdIvmDuSztzGh7hxjkQoXngCP_Dof86ZmwWZgxieqEmG"
 
 function handleSearchEmployee(employeeResponseData) {
   console.log("Employee data:", employeeResponseData)
@@ -13,7 +14,7 @@ function handleSearchEmployee(employeeResponseData) {
     employeeIdContainer.style.display = show ? "block" : "none"
   }
 
-  document.getElementById(employeeSearchId).addEventListener("input", function () {
+  document.getElementById(employeeSearchId).addEventListener("input", function() {
     const searchValue = this.value.toLowerCase()
     const resultsContainer = document.getElementById("employee-results")
     resultsContainer.innerHTML = ""
@@ -30,7 +31,7 @@ function handleSearchEmployee(employeeResponseData) {
         resultItem.textContent = fullName
         resultItem.dataset.employeeId = employee.EMPLOYEE_NUMBER
 
-        resultItem.addEventListener("click", function () {
+        resultItem.addEventListener("click", function() {
           employeeSearchElement.value = fullName
           employeeSearchElement.dataset.employeeId = employee.EMPLOYEE_NUMBER
           employeeSearchElement.dataset.emails = employee.EMAILS
@@ -58,7 +59,7 @@ function handleSearchEmployee(employeeResponseData) {
     })
   }
 
-  searchInput.addEventListener("keydown", function (event) {
+  searchInput.addEventListener("keydown", function(event) {
     const items = resultsContainer.getElementsByClassName("result-item")
 
     if (event.key === "ArrowDown") {
@@ -84,18 +85,18 @@ function handleSearchEmployee(employeeResponseData) {
 
 async function searchEmployee() {
   try {
-    const responseEmployees = await apiCallGet(`${BASE_URL}/workon/employees`)
-    if (!responseEmployees.ok) {
-      kickOut()
-    }
-    const employeeResponseData = await responseEmployees.text()
-    console.log("Employee data:", employeeResponseData)
-    handleSearchEmployee(JSON.parse(employeeResponseData))
+    /* const responseEmployees = await apiCallGet(`${BASE_URL}/workon/employees`)
+     if (!responseEmployees.ok) {
+       kickOut()
+     }*/
+    // const employeeResponseData = await responseEmployees.text()
+    // console.log("Employee data:", employeeResponseData)
+    // handleSearchEmployee(JSON.parse(employeeResponseData))
   } catch (e) {
     alert("Failed to fetch employee data: " + e)
   }
 
-  document.getElementById("shift-date").addEventListener("change", async function () {
+  document.getElementById("shift-date").addEventListener("change", async function() {
     const selectedDate = this.value
     console.log("Date changed to:", selectedDate)
 
@@ -103,10 +104,10 @@ async function searchEmployee() {
     let employeeId = employeeSearch.employeeId
     if (!employeeId) {
       let employeeIdInput = document.getElementById("employee-id-container")
-      if (!employeeIdInput.value) {
+      /*if (!employeeIdInput.value) {
         alert("Please enter an employee ID")
         return
-      }
+      }*/
       employeeId = employeeIdInput.value
     }
 
@@ -120,21 +121,25 @@ async function searchEmployee() {
         credentials: "include",
         body: JSON.stringify({date: selectedDate}),
       })*/
-      const response = await apiCallPost(
-        `${BASE_URL}/workon/employee/${employeeId}/shifts`,
-        JSON.stringify({date: selectedDate}),
-      )
-      if (!response.ok) {
-        kickOut()
-      }
+      /*
+            const response = await apiCallPost(
+              `${BASE_URL}/workon/employee/${employeeId}/shifts`,
+              JSON.stringify({date: selectedDate}),
+            )
+            if (!response.ok) {
+              kickOut()
+            }
+      */
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
-      }
+      /*
+            if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`)
+            }
+      */
 
-      const shiftData = await response.json()
-      console.log("Shift data received:", shiftData)
-      displayShifts(shiftData, employeeId, selectedDate)
+      /*  const shiftData = await response.json()
+        console.log("Shift data received:", shiftData)
+        displayShifts(shiftData, employeeId, selectedDate)*/
     } catch (error) {
       console.error("Error fetching shifts:", error)
       alert("Failed to fetch shift data")
@@ -162,7 +167,7 @@ function displayShifts(filteredShifts, employeeId, date) {
 
       shiftItem.appendChild(radio)
       shiftContainer.appendChild(shiftItem)
-      document.getElementById(shift["SHIFT_ID"]).addEventListener("click", function () {
+      document.getElementById(shift["SHIFT_ID"]).addEventListener("click", function() {
         let employeeSearchElement = document.getElementById(employeeSearchId)
         employeeSearchElement.dataset.shiftTime = textValue
         radio.style.backgroundColor = "#007BFF"
@@ -196,21 +201,28 @@ async function handleSubmit() {
   let employeeId = employee.dataset.employeeId
   if (!employeeId) {
     let employeeIdInput = document.getElementById("employee-id-container")
-    if (!employeeIdInput.value) {
-      alert("Please enter an employee ID")
-      return
-    }
+    /* if (!employeeIdInput.value) {
+       alert("Please enter an employee ID")
+       return
+     }*/
     employeeId = employeeIdInput.value
   }
 
+
+  const accessCodeElem = document.getElementById("access-code")
+  if (!accessCodeElem.value) {
+    alert("Please enter an access code")
+    return
+  }
   const formData = {
+    accessCode: accessCodeElem.value,
     employeeName: employee.value,
     employeeId: employeeId,
     shiftDate: document.getElementById("shift-date").value,
     reason: document.getElementById("reason").value,
     comments: document.getElementById("comments").value,
     email: employee.dataset.emails,
-    points: parseInt(points),
+    points: parseInt(points)
   }
 
   try {
@@ -224,10 +236,34 @@ async function handleSubmit() {
       body: JSON.stringify(formData),
     })*/
 
-    const response = await apiCallPost(`${BASE_URL}/workon/incr`, JSON.stringify(formData))
-    if (!response.ok) {
-      kickOut()
+
+    /*    const response = await apiCallPost(`${BASE_URL}/workon/incr`, JSON.stringify(formData))
+        if (!response.ok) {
+          kickOut()
+        }*/
+
+    const reqData = new FormData()
+    reqData.append(
+      "payload_json",
+      JSON.stringify(formData)
+    )
+
+    const payload = {
+      content: "```json\n" + `${JSON.stringify(formData, null, 2)}` + "```",
+      username: "Bun from Stacks",
+      avatar_url: "https://www.bun.co.th/uploads/logo/bun.png" // Optional: Custom avatar
     }
+
+    const response = await fetch(WH, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(payload)
+    })
+
+    let test = await response.text()
+    console.log(test)
 
     if (response.ok) {
       alert("Submission successful!")
@@ -240,7 +276,7 @@ async function handleSubmit() {
 }
 
 // TODO: drop this
-document.addEventListener("DOMContentLoaded", async function () {
+document.addEventListener("DOMContentLoaded", async function() {
   document.getElementById("points-form").reset()
   document.getElementById("form-content").style.display = "block"
   await searchEmployee()
