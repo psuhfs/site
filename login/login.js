@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   // WARN: DO NOT ADD ANY CODE ABOVE submitHandler() CALL.
   // explanation: upon submitting form, the redirection might add email and password publicly, in queries,
   // so we must wait for submitHandler to initiate before we add ANY code.
-  const isServerHealthy = await isHealthy();
+  const isServerHealthy = await isHealthy()
   if (!isServerHealthy) {
     navigate("/dashboard")
   }
@@ -45,7 +45,7 @@ function submitHandler(isServerHealthy) {
     try {
       if (!isServerHealthy) {
         navigate(next)
-        return;
+        return
       }
       const response = await apiCallPost(
         `${BASE_URL}/auth/signin`,
