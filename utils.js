@@ -68,6 +68,11 @@ function getToken() {
     ?.split("=")[1]
 }
 
+async function isHealthy() {
+  const resp = await fetch(`${BASE_URL}/health`);
+  return resp.ok;
+}
+
 function kickOut() {
   alert("You are not allowed to view this page")
   navigate("/login")
