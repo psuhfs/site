@@ -3,9 +3,12 @@ document.addEventListener("DOMContentLoaded", async () => {
   // WARN: DO NOT ADD ANY CODE ABOVE submitHandler() CALL.
   // explanation: upon submitting form, the redirection might add email and password publicly, in queries,
   // so we must wait for submitHandler to initiate before we add ANY code.
-  navigate("/dashboard")
+  const isServerHealthy = await isHealthy()
+  if (!isServerHealthy) {
+    navigate("/dashboard")
+  }
 
-  // submitHandler()
+  submitHandler(isServerHealthy)
 
   const loginHref = document.getElementById("signupHref")
   loginHref.addEventListener("click", async (e) => {
@@ -24,7 +27,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 })
 
-function submitHandler() {
+function submitHandler(isServerHealthy) {
   let next = getNext()
   if (!next) {
     // TODO: need to build dashboard
@@ -40,7 +43,11 @@ function submitHandler() {
     const password = document.getElementById("password").value
 
     try {
-      /*const response = await apiCallPost(
+      if (!isServerHealthy) {
+        navigate(next)
+        return
+      }
+      const response = await apiCallPost(
         `${BASE_URL}/auth/signin`,
         JSON.stringify({
           username,
@@ -54,8 +61,7 @@ function submitHandler() {
       } else {
         setToken(data["token"])
         navigate(next)
-      }*/
-      navigate(next)
+      }
     } catch (error) {
       alert("Something went wrong, please try again. If the problem persists, please contact support.")
       console.error("Login error:", error)

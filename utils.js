@@ -1,5 +1,5 @@
-const BASE_URL = "https://api.ssdd.dev"
-// const BASE_URL = "http://localhost:3000"
+// const BASE_URL = "https://api.ssdd.dev"
+const BASE_URL = "http://localhost:3000"
 
 // Function to preserve and transfer query parameters
 function navigateWithQueries(path, newParams = {}) {
@@ -66,6 +66,11 @@ function getToken() {
     .split("; ")
     .find((row) => row.startsWith("token="))
     ?.split("=")[1]
+}
+
+async function isHealthy() {
+  const resp = await fetch(`${BASE_URL}/health`)
+  return resp.ok
 }
 
 function kickOut() {
