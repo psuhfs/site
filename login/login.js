@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     navigate("/dashboard")
   }
 
-  submitHandler(isServerHealthy)
+  submitHandler(isServerHealthy);
 
   const loginHref = document.getElementById("signupHref")
   loginHref.addEventListener("click", async (e) => {
