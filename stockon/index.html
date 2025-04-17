@@ -6,12 +6,19 @@
     <title>Stockon Categories</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.min.js"></script>
     <script src="../utils.js"></script>
   </head>
   <body>
     <h1>Stockon Categories</h1>
 
     <div class="dropdown-container">
+      <div class="search-container" style="display: none;">
+        <input type="text" id="search-input" placeholder="Search for items..." />
+        <button id="search-button">Search</button>
+        <button id="clear-search">Clear</button>
+      </div>
+
       <select id="location-dropdown">
         <option value="">Select Location</option>
       </select>

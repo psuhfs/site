@@ -2,9 +2,18 @@ document.addEventListener("DOMContentLoaded", async function () {
   const locationDropdown = document.getElementById("location-dropdown")
   const areaDropdown = document.getElementById("area-dropdown")
   const itemsContainer = document.getElementById("items-container")
+  const searchInput = document.getElementById("search-input")
+  const searchButton = document.getElementById("search-button")
+  const clearSearchButton = document.getElementById("clear-search")
+  const searchContainer = document.querySelector(".search-container")
+  const categoriesContainer = document.getElementById("categories-container")
+
+  // Track if a category is selected
+  let categorySelected = false
 
   let categoriesData = null
   let data = null
+  let allItems = []
 
   try {
     const resp = await apiCallGet(`${BASE_URL}/stockon/getItems`)
@@ -24,6 +33,26 @@ document.addEventListener("DOMContentLoaded", async function () {
     data = await resp.json()
   }
   categoriesData = data
+
+  // Initialize allItems array for searching
+  Object.keys(data).forEach(location => {
+    data[location].areas.forEach(area => {
+      Object.keys(area.info).forEach(category => {
+        const categoryItems = area.info[category];
+        const itemsToAdd = Array.isArray(categoryItems) ? categoryItems : [categoryItems];
+        itemsToAdd.forEach(item => {
+          if (item.item_id && item.name) { // Ensure valid items only
+            allItems.push({
+              ...item,
+              location: location,
+              area: area.name,
+              category: category
+            });
+          }
+        });
+      });
+    });
+  });
 
   // Global array to track item quantities
   window.stockonItemQuantities = []
@@ -103,6 +132,19 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   document.body.appendChild(submitButton)
 
+  // Function to check and update search visibility
+  function updateSearchVisibility() {
+    const locationSelected = locationDropdown.value !== "";
+    const areaSelected = areaDropdown.value !== "";
+    
+    // Only show search when location, area, and a category are selected
+    if (locationSelected && areaSelected && categorySelected) {
+      searchContainer.style.display = "flex";
+    } else {
+      searchContainer.style.display = "none";
+    }
+  }
+
   // Populate Location Dropdown
   Object.keys(data).forEach((locationName) => {
     const option = document.createElement("option")
@@ -116,6 +158,10 @@ document.addEventListener("DOMContentLoaded", async function () {
     // Clear previous area and category dropdowns
     areaDropdown.innerHTML = "<option value=''>Select Area</option>"
     itemsContainer.innerHTML = ""
+    
+    // Reset category selected state
+    categorySelected = false
+    updateSearchVisibility();
 
     const selectedLocation = this.value
     if (!selectedLocation) return
@@ -160,12 +206,70 @@ document.addEventListener("DOMContentLoaded", async function () {
     submitBtn.style.display = window.stockonItemQuantities.length > 0 ? "block" : "none"
   }
 
+  // Function to display items based on array of items
+  function displayItems(items, location, area) {
+    // Clear previous items
+    itemsContainer.innerHTML = ""
+    
+    // Create item display for each item
+    items.forEach((item) => {
+      const itemDiv = document.createElement("div")
+      itemDiv.classList.add("item")
+
+      // Find existing quantity or set to 0
+      const existingItemIndex = window.stockonItemQuantities.findIndex(
+        (q) => q.item_id === item.item_id && q.location === location && q.area === area,
+      )
+
+      const initialQuantity =
+        existingItemIndex !== -1 ? window.stockonItemQuantities[existingItemIndex].quantity : 0
+
+      itemDiv.innerHTML = `
+        <h3>${item.name}</h3>
+        <p>Item ID: ${item.item_id}</p>
+        <p>Unit Size: ${item.unit_sz}</p>
+        ${item.category ? `<p>Category: ${item.category}</p>` : ''}
+        <div class="quantity-controls">
+            <button class="decrement-btn" data-item-id="${item.item_id}">-</button>
+            <span class="quantity">${initialQuantity}</span>
+            <button class="increment-btn" data-item-id="${item.item_id}">+</button>
+        </div>
+      `
+
+      itemsContainer.appendChild(itemDiv)
+
+      // Add event listeners for increment/decrement
+      const incrementBtn = itemDiv.querySelector(".increment-btn")
+      const decrementBtn = itemDiv.querySelector(".decrement-btn")
+      const quantitySpan = itemDiv.querySelector(".quantity")
+
+      incrementBtn.addEventListener("click", () => {
+        const currentQuantity = parseInt(quantitySpan.textContent)
+        const newQuantity = currentQuantity + 1
+        quantitySpan.textContent = newQuantity
+
+        updateItemQuantity(item, location, area, item.category || "", newQuantity)
+      })
+
+      decrementBtn.addEventListener("click", () => {
+        const currentQuantity = parseInt(quantitySpan.textContent)
+        const newQuantity = Math.max(0, currentQuantity - 1)
+        quantitySpan.textContent = newQuantity
+
+        updateItemQuantity(item, location, area, item.category || "", newQuantity)
+      })
+    })
+  }
+
   // Area Dropdown Change Event
   areaDropdown.addEventListener("change", function () {
     // Clear previous categories and items
-    const categoriesContainer = document.getElementById("categories-container")
     categoriesContainer.innerHTML = ""
     itemsContainer.innerHTML = ""
+    
+    // Reset category selected state
+    categorySelected = false
+    updateSearchVisibility();
 
     const selectedLocation = locationDropdown.value
     const selectedArea = this.value
@@ -188,68 +292,105 @@ document.addEventListener("DOMContentLoaded", async function () {
 
         // Add 'selected' class to clicked card
         this.classList.add("selected")
-
-        // Clear previous items
-        itemsContainer.innerHTML = ""
+        
+        // Set category selected to true
+        categorySelected = true
+        updateSearchVisibility();
 
         // Get items for the selected category
         const categoryItems = area.info[categoryName]
 
         // Handle multiple items or a single item
         const itemsToDisplay = Array.isArray(categoryItems) ? categoryItems : [categoryItems]
-
-        // Create item display for each item
-        itemsToDisplay.forEach((item) => {
-          const itemDiv = document.createElement("div")
-          itemDiv.classList.add("item")
-
-          // Find existing quantity or set to 0
-          const existingItemIndex = window.stockonItemQuantities.findIndex(
-            (q) => q.item_id === item.item_id && q.location === selectedLocation && q.area === selectedArea,
-          )
-
-          const initialQuantity =
-            existingItemIndex !== -1 ? window.stockonItemQuantities[existingItemIndex].quantity : 0
-
-          itemDiv.innerHTML = `
-                        <h3>${item.name}</h3>
-                        <p>Item ID: ${item.item_id}</p>
-                        <p>Unit Size: ${item.unit_sz}</p>
-                        <div class="quantity-controls">
-                            <button class="decrement-btn" data-item-id="${item.item_id}">-</button>
-                            <span class="quantity">${initialQuantity}</span>
-                            <button class="increment-btn" data-item-id="${item.item_id}">+</button>
-                        </div>
-                    `
-
-          itemsContainer.appendChild(itemDiv)
-
-          // Add event listeners for increment/decrement
-          const incrementBtn = itemDiv.querySelector(".increment-btn")
-          const decrementBtn = itemDiv.querySelector(".decrement-btn")
-          const quantitySpan = itemDiv.querySelector(".quantity")
-
-          incrementBtn.addEventListener("click", () => {
-            const currentQuantity = parseInt(quantitySpan.textContent)
-            const newQuantity = currentQuantity + 1
-            quantitySpan.textContent = newQuantity
-
-            updateItemQuantity(item, selectedLocation, selectedArea, categoryName, newQuantity)
-          })
-
-          decrementBtn.addEventListener("click", () => {
-            const currentQuantity = parseInt(quantitySpan.textContent)
-            const newQuantity = Math.max(0, currentQuantity - 1)
-            quantitySpan.textContent = newQuantity
-
-            updateItemQuantity(item, selectedLocation, selectedArea, categoryName, newQuantity)
-          })
-        })
+        
+        // Add category to each item for display
+        const itemsWithCategory = itemsToDisplay.map(item => ({
+          ...item,
+          category: categoryName
+        }));
+        
+        // Display the items
+        displayItems(itemsWithCategory, selectedLocation, selectedArea)
       })
 
       categoriesContainer.appendChild(categoryCard)
     })
   })
+
+  // Search functionality
+  searchButton.addEventListener("click", performSearch);
+  searchInput.addEventListener("keyup", function(event) {
+    if (event.key === "Enter") {
+      performSearch();
+    }
+  });
+
+  function performSearch() {
+    const query = searchInput.value.trim();
+    if (query.length < 2) {
+      alert("Please enter at least 2 characters to search");
+      return;
+    }
+
+    // Create Fuse.js instance for fuzzy searching
+    const fuse = new Fuse(allItems, {
+      keys: ["name", "item_id"],
+      threshold: 0.3,
+      includeScore: true
+    });
+
+    const results = fuse.search(query);
+    
+    // Clear categories container and show search results
+    document.getElementById("categories-container").innerHTML = "";
+    
+    if (results.length === 0) {
+      itemsContainer.innerHTML = "<p class='no-results'>No items found matching your search.</p>";
+    } else {
+      // Get selected location and area from dropdowns
+      const selectedLocation = locationDropdown.value;
+      const selectedArea = areaDropdown.value;
+      
+      if (!selectedLocation || !selectedArea) {
+        itemsContainer.innerHTML = "<p class='no-results'>Please select both location and area before searching.</p>";
+        return;
+      }
+      
+      // Filter results to only include items from the selected location and area
+      const filteredResults = results.filter(result => 
+        result.item.location === selectedLocation && 
+        result.item.area === selectedArea
+      ).map(result => result.item);
+
+      if (filteredResults.length === 0) {
+        itemsContainer.innerHTML = "<p class='no-results'>No matching items found in the selected location and area.</p>";
+      } else {
+        displayItems(filteredResults, selectedLocation, selectedArea);
+      }
+    }
+  }
+
+  // Clear search button
+  clearSearchButton.addEventListener("click", function() {
+    searchInput.value = "";
+    itemsContainer.innerHTML = "";
+
+    // If location and area are selected, show categories again
+    const selectedLocation = locationDropdown.value;
+    const selectedArea = areaDropdown.value;
+
+    if (selectedLocation && selectedArea) {
+      // Simulate selecting the active category if one was selected
+      const selectedCategoryCard = document.querySelector(".category-card.selected");
+      if (selectedCategoryCard) {
+        selectedCategoryCard.click();
+      } else {
+        // Otherwise just rebuild the categories
+        const event = new Event("change");
+        areaDropdown.dispatchEvent(event);
+      }
+    }
+  });
 })
 
 // Function to send Discord webhook
