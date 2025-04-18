@@ -3,8 +3,6 @@ document.addEventListener("DOMContentLoaded", async function () {
   const areaDropdown = document.getElementById("area-dropdown")
   const itemsContainer = document.getElementById("items-container")
   const searchInput = document.getElementById("search-input")
-  // const searchButton = document.getElementById("search-button")
-  // const clearSearchButton = document.getElementById("clear-search")
   const searchContainer = document.querySelector(".search-container")
   const categoriesContainer = document.getElementById("categories-container")
 
@@ -359,10 +357,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     });
 
     const results = fuse.search(query);
-    
-    // DISABLED this behaviour when searching
-    // Clear categories container and show search results
-    // document.getElementById("categories-container").innerHTML = "";
     
     if (results.length === 0) {
       itemsContainer.innerHTML = "<p class='no-results'>No items found matching your search.</p>";
