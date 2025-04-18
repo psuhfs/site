@@ -253,10 +253,14 @@ document.addEventListener("DOMContentLoaded", async function () {
 
       decrementBtn.addEventListener("click", () => {
         const currentQuantity = parseInt(quantitySpan.textContent)
-        const newQuantity = Math.max(0, currentQuantity - 1)
-        quantitySpan.textContent = newQuantity
 
-        updateItemQuantity(item, location, area, item.category || "", newQuantity)
+        // Prevent submit button showing up if currentQuantity is 0
+        if (currentQuantity > 0) {
+          const newQuantity = Math.max(0, currentQuantity - 1)
+          quantitySpan.textContent = newQuantity
+          updateItemQuantity(item, location, area, item.category || "", newQuantity)
+        }
+
       })
     })
   }
@@ -341,8 +345,9 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     const results = fuse.search(query);
     
+    // DISABLED this behaviour when searching
     // Clear categories container and show search results
-    document.getElementById("categories-container").innerHTML = "";
+    // document.getElementById("categories-container").innerHTML = "";
     
     if (results.length === 0) {
       itemsContainer.innerHTML = "<p class='no-results'>No items found matching your search.</p>";
