@@ -3,8 +3,8 @@ document.addEventListener("DOMContentLoaded", async function () {
   const areaDropdown = document.getElementById("area-dropdown")
   const itemsContainer = document.getElementById("items-container")
   const searchInput = document.getElementById("search-input")
-  const searchButton = document.getElementById("search-button")
-  const clearSearchButton = document.getElementById("clear-search")
+  // const searchButton = document.getElementById("search-button")
+  // const clearSearchButton = document.getElementById("clear-search")
   const searchContainer = document.querySelector(".search-container")
   const categoriesContainer = document.getElementById("categories-container")
 
@@ -158,7 +158,8 @@ document.addEventListener("DOMContentLoaded", async function () {
     // Clear previous area and category dropdowns
     areaDropdown.innerHTML = "<option value=''>Select Area</option>"
     itemsContainer.innerHTML = ""
-    
+    categoriesContainer.innerHTML = ""
+
     // Reset category selected state
     categorySelected = false
     updateSearchVisibility();
@@ -321,20 +322,34 @@ document.addEventListener("DOMContentLoaded", async function () {
     })
   })
 
-  // Search functionality
-  searchButton.addEventListener("click", performSearch);
-  searchInput.addEventListener("keyup", function(event) {
-    if (event.key === "Enter") {
-      performSearch();
+
+  searchInput.addEventListener("input", function() {
+    const query = this.value.trim()
+
+    // If empty, Clear results and restore categories view
+    if (!query) {
+      itemsContainer.innerHTML = ""
+      const selectedLocation = locationDropdown.value
+      const selectedArea = areaDropdown.value
+
+      if (selectedLocation && selectedArea) {
+        // If a category was already selected, restore items
+        const selectedCard = document.querySelector(".category-card.selected")
+        if (selectedCard) {
+          selectedCard.click()
+        } else {
+          // Do area change to repopulate categories
+          areaDropdown.dispatchEvent(new Event("change"))
+        }
+      }
+      return
     }
+
+    performSearch();
   });
 
   function performSearch() {
     const query = searchInput.value.trim();
-    if (query.length < 2) {
-      alert("Please enter at least 2 characters to search");
-      return;
-    }
 
     // Create Fuse.js instance for fuzzy searching
     const fuse = new Fuse(allItems, {
@@ -374,28 +389,6 @@ document.addEventListener("DOMContentLoaded", async function () {
       }
     }
   }
-
-  // Clear search button
-  clearSearchButton.addEventListener("click", function() {
-    searchInput.value = "";
-    itemsContainer.innerHTML = "";
-
-    // If location and area are selected, show categories again
-    const selectedLocation = locationDropdown.value;
-    const selectedArea = areaDropdown.value;
-
-    if (selectedLocation && selectedArea) {
-      // Simulate selecting the active category if one was selected
-      const selectedCategoryCard = document.querySelector(".category-card.selected");
-      if (selectedCategoryCard) {
-        selectedCategoryCard.click();
-      } else {
-        // Otherwise just rebuild the categories
-        const event = new Event("change");
-        areaDropdown.dispatchEvent(event);
-      }
-    }
-  });
 })
 
 // Function to send Discord webhook
