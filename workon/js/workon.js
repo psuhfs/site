@@ -3,6 +3,7 @@ const employeeSearchId = "employee-search"
 const selectedPointsId = "selected-points"
 const WH =
   "https://discord.com/api/webhooks/1346883383883731065/R_vnDiPgss41msfCQBv_WOFqmdIvmDuSztzGh7hxjkQoXngCP_Dof86ZmwWZgxieqEmG"
+let selectedShift = null
 
 function handleSearchEmployee(employeeResponseData) {
   console.log("Employee data:", employeeResponseData)
@@ -166,7 +167,9 @@ function displayShifts(filteredShifts, employeeId, date) {
       radio.name = "shift"
       let textValue = `${shift["START_TIME"]} - ${shift["END_TIME"]} (${shift["POSITION_NAME"]})`
       radio.value = textValue
-      console.log(textValue)
+      radio.onclick = function () {
+        selectedShift = this.value
+      }
 
       shiftItem.appendChild(radio)
       shiftContainer.appendChild(shiftItem)
@@ -211,12 +214,17 @@ async function handleSubmit() {
      }
     employeeId = employeeIdInput.value
   }
-
+  selectedShift = document.getElementById("manual-shift").value ? document.getElementById("manual-shift").value: selectedShift;
+  if (!selectedShift) {
+    alert("Please select a shift date")
+    return
+  }
 
   let formData = {
     employeeName: employee.value,
     employeeId: employeeId,
     shiftDate: document.getElementById("shift-date").value,
+    selectedShift,
     reason: document.getElementById("reason").value,
     comments: document.getElementById("comments").value,
     email: employee.dataset.emails,
