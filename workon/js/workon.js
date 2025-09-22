@@ -129,8 +129,8 @@ async function searchEmployee(isServerHealthy) {
           body: JSON.stringify({date: selectedDate}),
         })*/
         const response = await apiCallPost(
-            `${BASE_URL}/workon/employee/${employeeId}/shifts`,
-            JSON.stringify({date: selectedDate}),
+          `${BASE_URL}/workon/employee/${employeeId}/shifts`,
+          JSON.stringify({date: selectedDate}),
         )
         if (!response.ok) {
           kickOut()
@@ -201,20 +201,22 @@ function selectReason(button) {
 }
 
 async function handleSubmit() {
-    const isServerHealthy = await isHealthy();
+  const isServerHealthy = await isHealthy()
   let points = document.getElementById("selected-points").value
   const employee = document.getElementById(employeeSearchId)
 
   let employeeId = employee.dataset.employeeId
   if (!employeeId) {
     let employeeIdInput = document.getElementById("employee-id-container")
-     if (isServerHealthy && !employeeIdInput.value) {
-       alert("Please enter an employee ID")
-       return
-     }
+    if (isServerHealthy && !employeeIdInput.value) {
+      alert("Please enter an employee ID")
+      return
+    }
     employeeId = employeeIdInput.value
   }
-  selectedShift = document.getElementById("manual-shift").value ? document.getElementById("manual-shift").value: selectedShift;
+  selectedShift = document.getElementById("manual-shift").value
+    ? document.getElementById("manual-shift").value
+    : selectedShift
   if (!selectedShift) {
     alert("Please select a shift date")
     return
@@ -231,12 +233,12 @@ async function handleSubmit() {
     points: parseInt(points),
   }
   if (!isServerHealthy) {
-      const accessCodeElem = document.getElementById("access-code")
-      if (!accessCodeElem.value) {
-          alert("Please enter an access code")
-          return
-      }
-      formData.accessCode = accessCodeElem.value;
+    const accessCodeElem = document.getElementById("access-code")
+    if (!accessCodeElem.value) {
+      alert("Please enter an access code")
+      return
+    }
+    formData.accessCode = accessCodeElem.value
   }
 
   try {
@@ -250,42 +252,42 @@ async function handleSubmit() {
       body: JSON.stringify(formData),
     })*/
 
-      if (isServerHealthy) {
-          const response = await apiCallPost(`${BASE_URL}/workon/incr`, JSON.stringify(formData))
-          if (!response.ok) {
-              kickOut()
-          }
-          if (response.ok) {
-              alert("Submission successful!")
-          } else {
-              console.error("Submission failed:", response.statusText)
-          }
-      }else {
-          const reqData = new FormData()
-          reqData.append("payload_json", JSON.stringify(formData))
-
-          const payload = {
-              content: "```json\n" + `${JSON.stringify(formData, null, 2)}` + "```",
-              username: "Bun from Stacks",
-              avatar_url: "https://www.bun.co.th/uploads/logo/bun.png", // Optional: Custom avatar
-          }
-
-          const response = await fetch(WH, {
-              method: "POST",
-              headers: {
-                  "Content-Type": "application/json",
-              },
-              body: JSON.stringify(payload),
-          })
-
-          let test = await response.text()
-          console.log(test)
-          if (response.ok) {
-              alert("Submission successful!")
-          } else {
-              console.error("Submission failed:", response.statusText)
-          }
+    if (isServerHealthy) {
+      const response = await apiCallPost(`${BASE_URL}/workon/incr`, JSON.stringify(formData))
+      if (!response.ok) {
+        kickOut()
       }
+      if (response.ok) {
+        alert("Submission successful!")
+      } else {
+        console.error("Submission failed:", response.statusText)
+      }
+    } else {
+      const reqData = new FormData()
+      reqData.append("payload_json", JSON.stringify(formData))
+
+      const payload = {
+        content: "```json\n" + `${JSON.stringify(formData, null, 2)}` + "```",
+        username: "Bun from Stacks",
+        avatar_url: "https://www.bun.co.th/uploads/logo/bun.png", // Optional: Custom avatar
+      }
+
+      const response = await fetch(WH, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      })
+
+      let test = await response.text()
+      console.log(test)
+      if (response.ok) {
+        alert("Submission successful!")
+      } else {
+        console.error("Submission failed:", response.statusText)
+      }
+    }
   } catch (error) {
     console.error("Error submitting form:", error)
   }
@@ -295,10 +297,10 @@ async function handleSubmit() {
 document.addEventListener("DOMContentLoaded", async function () {
   document.getElementById("points-form").reset()
   document.getElementById("form-content").style.display = "block"
-  const isServerHealthy = await isHealthy();
+  const isServerHealthy = await isHealthy()
   if (!isServerHealthy) {
-    const accessCodeDiv = document.getElementById("access-code-id-container");
-    accessCodeDiv.hidden = false;
+    const accessCodeDiv = document.getElementById("access-code-id-container")
+    accessCodeDiv.hidden = false
   }
   await searchEmployee(isServerHealthy)
 })

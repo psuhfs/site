@@ -202,13 +202,11 @@ function navigateWithQueries(path, newParams = {}) {
 ## Security Considerations
 
 1. **Authentication**
-
    - Secure token storage
    - HTTPS enforcement
    - Protected API endpoints
 
 2. **Data Security**
-
    - Input validation
    - XSS prevention
    - CSRF protection
@@ -221,14 +219,12 @@ function navigateWithQueries(path, newParams = {}) {
 ## Best Practices
 
 1. **Code Organization**
-
    - Modular structure
    - Separation of concerns
    - Utility function reuse
    - Consistent naming conventions
 
 2. **Performance**
-
    - Minimal dependencies
    - Optimized asset loading
    - Efficient DOM manipulation
@@ -243,7 +239,6 @@ function navigateWithQueries(path, newParams = {}) {
 ## Future Enhancements
 
 1. **Technical Improvements**
-
    - Progressive Web App support
    - Enhanced offline capabilities
    - Performance optimization
