@@ -121,7 +121,7 @@ class StockonButtonManager {
 
     const submissionData = {
       date: this.selectedDate,
-      items: this.itemQuantities
+      items: this.itemQuantities,
     }
 
     const jsonString = JSON.stringify(submissionData)
@@ -195,7 +195,7 @@ class StockonButtonManager {
   }
 }
 
-document.addEventListener("DOMContentLoaded", async function() {
+document.addEventListener("DOMContentLoaded", async function () {
   const locationDropdown = document.getElementById("location-dropdown")
   const areaDropdown = document.getElementById("area-dropdown")
   const itemsContainer = document.getElementById("items-container")
@@ -240,7 +240,7 @@ document.addEventListener("DOMContentLoaded", async function() {
               ...item,
               location: location,
               area: area.name,
-              category: category
+              category: category,
             })
           }
         })
@@ -269,7 +269,7 @@ document.addEventListener("DOMContentLoaded", async function() {
   })
 
   // Location Dropdown Change Event
-  locationDropdown.addEventListener("change", function() {
+  locationDropdown.addEventListener("change", function () {
     areaDropdown.innerHTML = "<option value=''>Select Area</option>"
     itemsContainer.innerHTML = ""
     categoriesContainer.innerHTML = ""
@@ -292,7 +292,7 @@ document.addEventListener("DOMContentLoaded", async function() {
   // Update the updateItemQuantity function to use buttonManager
   function updateItemQuantity(item, location, area, category, quantity) {
     const existingItemIndex = buttonManager.itemQuantities.findIndex(
-      (q) => q.item_id === item.item_id && q.location === location && q.area === area
+      (q) => q.item_id === item.item_id && q.location === location && q.area === area,
     )
 
     const itemQuantityEntry = {
@@ -302,7 +302,7 @@ document.addEventListener("DOMContentLoaded", async function() {
       item_id: item.item_id,
       name: item.name,
       unit_sz: item.unit_sz,
-      quantity: quantity
+      quantity: quantity,
     }
 
     if (existingItemIndex !== -1) {
@@ -327,7 +327,7 @@ document.addEventListener("DOMContentLoaded", async function() {
       itemDiv.classList.add("item")
 
       const existingItemIndex = buttonManager.itemQuantities.findIndex(
-        (q) => q.item_id === item.item_id && q.location === location && q.area === area
+        (q) => q.item_id === item.item_id && q.location === location && q.area === area,
       )
 
       const initialQuantity = existingItemIndex !== -1 ? buttonManager.itemQuantities[existingItemIndex].quantity : 0
@@ -369,7 +369,7 @@ document.addEventListener("DOMContentLoaded", async function() {
   }
 
   // Area Dropdown Change Event
-  areaDropdown.addEventListener("change", function() {
+  areaDropdown.addEventListener("change", function () {
     // Clear previous categories and items
     categoriesContainer.innerHTML = ""
     itemsContainer.innerHTML = ""
@@ -391,7 +391,7 @@ document.addEventListener("DOMContentLoaded", async function() {
       categoryCard.classList.add("category-card")
       categoryCard.textContent = categoryName
 
-      categoryCard.addEventListener("click", function() {
+      categoryCard.addEventListener("click", function () {
         // Remove 'selected' class from all cards
         document.querySelectorAll(".category-card").forEach((card) => {
           card.classList.remove("selected")
@@ -413,7 +413,7 @@ document.addEventListener("DOMContentLoaded", async function() {
         // Add category to each item for display
         const itemsWithCategory = itemsToDisplay.map((item) => ({
           ...item,
-          category: categoryName
+          category: categoryName,
         }))
 
         // Display the items
@@ -424,7 +424,7 @@ document.addEventListener("DOMContentLoaded", async function() {
     })
   })
 
-  searchInput.addEventListener("input", function() {
+  searchInput.addEventListener("input", function () {
     const query = this.value.trim()
 
     // If empty, Clear results and restore categories view
@@ -456,7 +456,7 @@ document.addEventListener("DOMContentLoaded", async function() {
     const fuse = new Fuse(allItems, {
       keys: ["name", "item_id"],
       threshold: 0.3,
-      includeScore: true
+      includeScore: true,
     })
 
     const results = fuse.search(query)
@@ -502,15 +502,15 @@ async function sendDiscordWebhook(jsonData) {
       "payload_json",
       JSON.stringify({
         content: "Failed Stockon Item Upload",
-        username: "Stockon Error Reporter"
-      })
+        username: "Stockon Error Reporter",
+      }),
     )
     formData.append("file", blob, "failed_stockon_upload.json")
 
     // Send webhook
     const webhookResp = await fetch(DISCORD_WEBHOOK_URL, {
       method: "POST",
-      body: formData
+      body: formData,
     })
 
     return webhookResp.ok
@@ -539,10 +539,3 @@ function downloadJsonFile(jsonData) {
   link.click()
   document.body.removeChild(link)
 }
-
-
-/*
-* class banao for date and submit button
-* with a constructor
-* fir getter rakhlo
-* */
