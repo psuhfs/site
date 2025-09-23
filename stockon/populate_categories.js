@@ -120,7 +120,7 @@ class StockonButtonManager {
     }
 
     const submissionData = {
-      date: new Date(this.selectedDate).toLocaleString('en-US', { timeZone: 'America/New_York' }),
+      date: this.selectedDate,
       items: this.itemQuantities,
     }
 
