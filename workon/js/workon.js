@@ -90,7 +90,7 @@ async function searchEmployee(isServerHealthy) {
     try {
       const responseEmployees = await apiCallGet(`${BASE_URL}/workon/employees`)
       if (!responseEmployees.ok) {
-        kickOut()
+        kickOut(responseEmployees.status)
       }
       const employeeResponseData = await responseEmployees.text()
       console.log("Employee data:", employeeResponseData)
@@ -133,10 +133,7 @@ async function searchEmployee(isServerHealthy) {
           JSON.stringify({date: selectedDate}),
         )
         if (!response.ok) {
-          kickOut()
-        }
-
-        if (!response.ok) {
+          kickOut(response.status)
           throw new Error(`HTTP error! status: ${response.status}`)
         }
 
@@ -255,7 +252,7 @@ async function handleSubmit() {
     if (isServerHealthy) {
       const response = await apiCallPost(`${BASE_URL}/workon/incr`, JSON.stringify(formData))
       if (!response.ok) {
-        kickOut()
+        kickOut(response.status)
       }
       if (response.ok) {
         alert("Submission successful!")

@@ -34,11 +34,12 @@ function getNext() {
 }
 
 async function apiCallPost(url, body) {
+  const token = getToken()
   return fetch(url, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${getToken()}`,
+      ...(token && { Authorization: `Bearer ${token}` }),
     },
     credentials: "include",
     body,
@@ -46,11 +47,12 @@ async function apiCallPost(url, body) {
 }
 
 async function apiCallGet(url) {
+  const token = getToken()
   return fetch(url, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${getToken()}`,
+      ...(token && { Authorization: `Bearer ${token}` }),
     },
     credentials: "include",
   })
@@ -58,14 +60,19 @@ async function apiCallGet(url) {
 
 function setToken(token) {
   // Set secure cookie with necessary attributes for cross-origin
-  document.cookie = `token=${token}; Path=/; SameSite=None; Secure`
+  // Add Max-Age for 7 days (604800 seconds) to persist across sessions
+  document.cookie = `token=${encodeURIComponent(token)}; Path=/; SameSite=None; Secure; Max-Age=604800`
 }
 
 function getToken() {
-  return document.cookie
+  const cookieRow = document.cookie
     .split("; ")
     .find((row) => row.startsWith("token="))
-    ?.split("=")[1]
+  
+  if (!cookieRow) return undefined
+  
+  // Get everything after "token=" to handle JWT tokens with = padding
+  return cookieRow.substring(6) // "token=".length === 6
 }
 
 async function isHealthy() {
@@ -73,7 +80,12 @@ async function isHealthy() {
   return resp.ok
 }
 
-function kickOut() {
-  alert("You are not allowed to view this page")
-  navigate("/login")
+function kickOut(statusCode) {
+  // Only kick out for authentication/authorization errors
+  if (statusCode === 401 || statusCode === 403) {
+    alert("Your session has expired or you don't have permission. Please log in again.")
+    navigate("/login")
+  } else {
+    alert("An error occurred. Please try again.")
+  }
 }

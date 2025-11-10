@@ -531,7 +531,7 @@ function downloadJsonFile(jsonData) {
   // Create a link element
   const link = document.createElement("a")
   link.href = URL.createObjectURL(blob)
-  let date = new Date().getMilliseconds()
+  let date = Date.now()
   link.download = `stockon_upload_failed_${date}.json`
 
   // Append to body, click, and remove

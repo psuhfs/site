@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     e.preventDefault()
 
     // Basic validation
-    if (password.value !== "temp" && password.value !== confirmPassword) {
+    if (password.value !== "temp" && password.value !== confirmPassword.value) {
       alert("Passwords do not match!")
       return
     }
