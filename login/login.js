@@ -1,5 +1,27 @@
 // Handle form submission
 document.addEventListener("DOMContentLoaded", async () => {
+  // Password visibility toggle
+  const toggleButtons = document.querySelectorAll(".toggle-password")
+  
+  toggleButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const targetId = button.getAttribute("data-target")
+      const passwordInput = document.getElementById(targetId)
+      const eyeIcon = button.querySelector(".eye-icon")
+      const eyeOffIcon = button.querySelector(".eye-off-icon")
+      
+      if (passwordInput.type === "password") {
+        passwordInput.type = "text"
+        eyeIcon.style.display = "none"
+        eyeOffIcon.style.display = "block"
+      } else {
+        passwordInput.type = "password"
+        eyeIcon.style.display = "block"
+        eyeOffIcon.style.display = "none"
+      }
+    })
+  })
+
   // WARN: DO NOT ADD ANY CODE ABOVE submitHandler() CALL.
   // explanation: upon submitting form, the redirection might add email and password publicly, in queries,
   // so we must wait for submitHandler to initiate before we add ANY code.
@@ -10,12 +32,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   submitHandler(isServerHealthy)
 
-  const loginHref = document.getElementById("signupHref")
-  loginHref.addEventListener("click", async (e) => {
-    e.preventDefault()
-
-    navigateWithQueries("/signup")
-  })
   let next = getNext()
   if (!next) {
     // TODO: need to build dashboard

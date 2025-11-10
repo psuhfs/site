@@ -1,5 +1,28 @@
 // Handle form submission
 document.addEventListener("DOMContentLoaded", async () => {
+  // Password visibility toggle
+  const toggleButtons = document.querySelectorAll(".toggle-password")
+  
+  toggleButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const targetId = button.getAttribute("data-target")
+      const passwordInput = document.getElementById(targetId)
+      const eyeIcon = button.querySelector(".eye-icon")
+      const eyeOffIcon = button.querySelector(".eye-off-icon")
+      
+      if (passwordInput.type === "password") {
+        passwordInput.type = "text"
+        eyeIcon.style.display = "none"
+        eyeOffIcon.style.display = "block"
+      } else {
+        passwordInput.type = "password"
+        eyeIcon.style.display = "block"
+        eyeOffIcon.style.display = "none"
+      }
+    })
+  })
+
+  // Handle access levels
   handleAccessLevels(
     await (await apiCallGet(`${BASE_URL}/zones/getZones`)).json(),
     await (await apiCallGet(`${BASE_URL}/zones/getStockAccess`)).json(),
@@ -36,7 +59,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     e.preventDefault()
 
     // Basic validation
-    if (password.value !== "temp" && password.value !== confirmPassword) {
+    if (password.value !== "temp" && password.value !== confirmPassword.value) {
       alert("Passwords do not match!")
       return
     }
@@ -58,18 +81,12 @@ document.addEventListener("DOMContentLoaded", async () => {
       if (!response.ok) {
         alert("Something went wrong. Please try again.")
       } else {
-        alert("Account created successfully!")
+        showSuccessModal()
       }
     } catch (error) {
       console.error("Signup error:", error)
       // Handle error appropriately
     }
-  })
-
-  const loginHref = document.getElementById("loginHref")
-  loginHref.addEventListener("click", async (e) => {
-    e.preventDefault()
-    navigateWithQueries("/login")
   })
 })
 
@@ -104,4 +121,68 @@ function handleAccessLevels(zoneList, stockOnList) {
 
     stockOnAccess.appendChild(label)
   }
+}
+
+
+
+function showSuccessModal() {
+  const modal = document.getElementById("successModal")
+  const closeModalBtn = document.getElementById("closeModalBtn")
+  const createAnotherBtn = document.getElementById("createAnotherBtn")
+  
+  modal.style.display = "flex"
+  
+  // Close modal and stay on page
+  closeModalBtn.addEventListener("click", () => {
+    modal.style.display = "none"
+  })
+  
+  // Create another account - reset form
+  createAnotherBtn.addEventListener("click", () => {
+    modal.style.display = "none"
+    resetForm()
+  })
+  
+  // Close on ESC key
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && modal.style.display === "flex") {
+      modal.style.display = "none"
+    }
+  })
+  
+  // Close on overlay click
+  const overlay = modal.querySelector(".modal-overlay")
+  overlay.addEventListener("click", () => {
+    modal.style.display = "none"
+  })
+}
+
+function resetForm() {
+  const signupForm = document.getElementById("signupForm")
+  const email = document.getElementById("email")
+  const username = document.getElementById("username")
+  const password = document.getElementById("password")
+  const confirmPassword = document.getElementById("confirmPassword")
+  const zoneAccessCheckboxes = document.querySelectorAll(".zone-access")
+  const stockOnAccessCheckboxes = document.querySelectorAll(".stock-on-access")
+  
+  // Reset form
+  signupForm.reset()
+  
+  // Reset password fields to "temp"
+  password.value = confirmPassword.value = "temp"
+  
+  // Clear email
+  email.value = ""
+  
+  // Uncheck all checkboxes
+  zoneAccessCheckboxes.forEach(checkbox => checkbox.checked = false)
+  stockOnAccessCheckboxes.forEach(checkbox => checkbox.checked = false)
+  
+  // Clear selected items display
+  document.getElementById("selectedZoneAccess").innerHTML = ""
+  document.getElementById("selectedStockOnAccess").innerHTML = ""
+  
+  // Focus on username field
+  username.focus()
 }
