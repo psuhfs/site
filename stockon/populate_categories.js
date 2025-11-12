@@ -412,23 +412,26 @@ class StockonManager {
           <button class="quantity-btn" data-action="decrement" ${quantity === 0 ? 'disabled' : ''}>
             −
           </button>
-          <span class="quantity-display">${quantity}</span>
+          <input type="number" class="quantity-input" ${quantity > 0 ? `value="${quantity}"` : 'placeholder="0"'} min="0" step="1" />
           <button class="quantity-btn" data-action="increment">
             +
           </button>
         </div>
       `
       
-      // Add event listeners for quantity buttons
+      // Add event listeners for quantity buttons and input
       const decrementBtn = card.querySelector('[data-action="decrement"]')
       const incrementBtn = card.querySelector('[data-action="increment"]')
-      const quantityDisplay = card.querySelector('.quantity-display')
+      const quantityInput = card.querySelector('.quantity-input')
       
-      decrementBtn.addEventListener('click', () => {
-        const currentQuantity = this.selectedItems.get(itemKey)?.quantity || 0
-        const newQuantity = Math.max(0, currentQuantity - 1)
-        this.updateItemQuantity(item, itemKey, newQuantity)
-        quantityDisplay.textContent = newQuantity
+      const updateQuantityUI = (newQuantity) => {
+        if (newQuantity > 0) {
+          quantityInput.value = newQuantity
+          quantityInput.removeAttribute('placeholder')
+        } else {
+          quantityInput.value = ''
+          quantityInput.setAttribute('placeholder', '0')
+        }
         decrementBtn.disabled = newQuantity === 0
         
         if (newQuantity === 0) {
@@ -436,10 +439,22 @@ class StockonManager {
           const badge = card.querySelector('.item-badge.success')
           if (badge) badge.remove()
         } else {
-          const badge = card.querySelector('.item-badge.success')
-          if (badge) badge.textContent = `${newQuantity}x`
+          card.classList.add('selected')
+          let badge = card.querySelector('.item-badge.success')
+          if (!badge) {
+            badge = document.createElement('span')
+            badge.className = 'item-badge success'
+            card.querySelector('.item-header').appendChild(badge)
+          }
+          badge.textContent = `${newQuantity}x`
         }
-        
+      }
+      
+      decrementBtn.addEventListener('click', () => {
+        const currentQuantity = this.selectedItems.get(itemKey)?.quantity || 0
+        const newQuantity = Math.max(0, currentQuantity - 1)
+        this.updateItemQuantity(item, itemKey, newQuantity)
+        updateQuantityUI(newQuantity)
         this.updateUIState()
       })
       
@@ -447,19 +462,23 @@ class StockonManager {
         const currentQuantity = this.selectedItems.get(itemKey)?.quantity || 0
         const newQuantity = currentQuantity + 1
         this.updateItemQuantity(item, itemKey, newQuantity)
-        quantityDisplay.textContent = newQuantity
-        decrementBtn.disabled = false
-        card.classList.add('selected')
-        
-        let badge = card.querySelector('.item-badge.success')
-        if (!badge) {
-          badge = document.createElement('span')
-          badge.className = 'item-badge success'
-          card.querySelector('.item-header').appendChild(badge)
-        }
-        badge.textContent = `${newQuantity}x`
-        
+        updateQuantityUI(newQuantity)
         this.updateUIState()
+      })
+      
+      quantityInput.addEventListener('input', (e) => {
+        let newQuantity = parseInt(e.target.value) || 0
+        newQuantity = Math.max(0, newQuantity)
+        this.updateItemQuantity(item, itemKey, newQuantity)
+        updateQuantityUI(newQuantity)
+        this.updateUIState()
+      })
+      
+      quantityInput.addEventListener('blur', (e) => {
+        // Ensure valid value on blur
+        let newQuantity = parseInt(e.target.value) || 0
+        newQuantity = Math.max(0, newQuantity)
+        e.target.value = newQuantity
       })
       
       this.itemsContainer.appendChild(card)
