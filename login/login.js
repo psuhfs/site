@@ -2,14 +2,14 @@
 document.addEventListener("DOMContentLoaded", async () => {
   // Password visibility toggle
   const toggleButtons = document.querySelectorAll(".toggle-password")
-  
+
   toggleButtons.forEach((button) => {
     button.addEventListener("click", () => {
       const targetId = button.getAttribute("data-target")
       const passwordInput = document.getElementById(targetId)
       const eyeIcon = button.querySelector(".eye-icon")
       const eyeOffIcon = button.querySelector(".eye-off-icon")
-      
+
       if (passwordInput.type === "password") {
         passwordInput.type = "text"
         eyeIcon.style.display = "none"

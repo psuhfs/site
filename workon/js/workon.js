@@ -189,7 +189,7 @@ function selectReason(button) {
 
   button.classList.add("selected")
 
-  document.getElementById("reason").value = button.innerText.trim().split('\n')[0] // Get just the reason text
+  document.getElementById("reason").value = button.innerText.trim().split("\n")[0] // Get just the reason text
 
   const points = button.getAttribute("points")
   if (points !== null) {
@@ -203,11 +203,11 @@ function adjustPoints(delta) {
   const pointsInput = document.getElementById("points-input")
   let currentValue = parseInt(pointsInput.value) || 0
   let newValue = currentValue + delta
-  
+
   // Enforce min/max constraints
   if (newValue < 0) newValue = 0
   if (newValue > 10) newValue = 10
-  
+
   pointsInput.value = newValue
 }
 
@@ -299,16 +299,17 @@ async function handleSubmit() {
 function showConfirmationModal(formData) {
   // Populate modal with form data
   document.getElementById("confirm-employee").textContent = formData.employeeName
-  document.getElementById("confirm-date").textContent = new Date(formData.shiftDate).toLocaleDateString('en-US', {
-    weekday: 'long',
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
+  document.getElementById("confirm-date").textContent = new Date(formData.shiftDate).toLocaleDateString("en-US", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
   })
   document.getElementById("confirm-shift").textContent = formData.selectedShift
   document.getElementById("confirm-reason").textContent = formData.reason
-  document.getElementById("confirm-points").textContent = `${formData.points} ${formData.points === 1 ? 'point' : 'points'}`
-  
+  document.getElementById("confirm-points").textContent =
+    `${formData.points} ${formData.points === 1 ? "point" : "points"}`
+
   const commentsRow = document.getElementById("confirm-comments-row")
   if (formData.comments && formData.comments.trim()) {
     document.getElementById("confirm-comments").textContent = formData.comments
@@ -327,7 +328,7 @@ async function confirmSubmit() {
   }
 
   closeConfirmationModal()
-  
+
   const isServerHealthy = await isHealthy()
   const submitButton = document.getElementById("form-submit")
   submitButton.classList.add("loading")
@@ -346,9 +347,9 @@ async function confirmSubmit() {
         document.getElementById("points-input").value = "0"
         selectedShift = null
         pendingFormData = null
-        
+
         // Clear selected reason
-        document.querySelectorAll(".reason-button").forEach(btn => btn.classList.remove("selected"))
+        document.querySelectorAll(".reason-button").forEach((btn) => btn.classList.remove("selected"))
       } else {
         console.error("Submission failed:", response.statusText)
       }
@@ -374,9 +375,9 @@ async function confirmSubmit() {
         document.getElementById("points-input").value = "0"
         selectedShift = null
         pendingFormData = null
-        
+
         // Clear selected reason
-        document.querySelectorAll(".reason-button").forEach(btn => btn.classList.remove("selected"))
+        document.querySelectorAll(".reason-button").forEach((btn) => btn.classList.remove("selected"))
       } else {
         console.error("Submission failed:", response.statusText)
       }
@@ -400,9 +401,9 @@ document.addEventListener("DOMContentLoaded", async function () {
     accessCodeDiv.hidden = false
   }
   await searchEmployee(isServerHealthy)
-  
+
   // Keyboard accessibility: Close modal on ESC key
-  document.addEventListener("keydown", function(event) {
+  document.addEventListener("keydown", function (event) {
     if (event.key === "Escape" || event.key === "Esc") {
       const modal = document.getElementById("confirmation-modal")
       if (modal.classList.contains("active")) {

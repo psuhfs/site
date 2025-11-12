@@ -39,7 +39,7 @@ async function apiCallPost(url, body) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      ...(token && { Authorization: `Bearer ${token}` }),
+      ...(token && {Authorization: `Bearer ${token}`}),
     },
     credentials: "include",
     body,
@@ -52,7 +52,7 @@ async function apiCallGet(url) {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      ...(token && { Authorization: `Bearer ${token}` }),
+      ...(token && {Authorization: `Bearer ${token}`}),
     },
     credentials: "include",
   })
@@ -65,12 +65,10 @@ function setToken(token) {
 }
 
 function getToken() {
-  const cookieRow = document.cookie
-    .split("; ")
-    .find((row) => row.startsWith("token="))
-  
+  const cookieRow = document.cookie.split("; ").find((row) => row.startsWith("token="))
+
   if (!cookieRow) return undefined
-  
+
   // Get everything after "token=" to handle JWT tokens with = padding
   return cookieRow.substring(6) // "token=".length === 6
 }
