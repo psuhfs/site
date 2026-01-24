@@ -87,3 +87,36 @@ function kickOut(statusCode) {
     alert("An error occurred. Please try again.")
   }
 }
+
+// Universal Theme Management
+function initializeTheme() {
+  const savedTheme = localStorage.getItem("theme")
+  if (savedTheme === "dark") {
+    document.documentElement.classList.add("dark-mode")
+    if (document.body) {
+      document.body.classList.add("dark-mode")
+    }
+  }
+}
+
+function setupThemeToggle() {
+  const themeToggle = document.getElementById("themeToggle")
+  if (!themeToggle) return
+  
+  themeToggle.addEventListener("click", () => {
+    document.documentElement.classList.toggle("dark-mode")
+    document.body.classList.toggle("dark-mode")
+    const isDark = document.body.classList.contains("dark-mode")
+    localStorage.setItem("theme", isDark ? "dark" : "light")
+  })
+}
+
+// Initialize theme immediately when script loads (applies to <html> element)
+initializeTheme()
+
+// Re-apply to body when it's ready
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initializeTheme)
+} else {
+  initializeTheme()
+}

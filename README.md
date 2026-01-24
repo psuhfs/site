@@ -21,13 +21,22 @@ The application follows a modular architecture with the following key components
 
 ```
 site/
-├── dashboard/          # Central dashboard module
-├── login/             # Authentication module
-├── signup/            # User registration module
-├── static/            # Static assets and schemas
-├── stockon/           # Stock management system
-├── workon/            # Points tracking system
-└── utils.js           # Shared utilities
+├── assets/            # Global assets folder
+│   ├── css/          # All stylesheets
+│   │   ├── dashboard.css
+│   │   ├── login.css
+│   │   ├── signup.css
+│   │   ├── stockon.css
+│   │   └── workon.css
+│   └── images/       # All images
+│       └── image.png
+├── dashboard/         # Central dashboard module
+├── login/            # Authentication module
+├── signup/           # User registration module
+├── static/           # Static assets and schemas
+├── stockon/          # Stock management system
+├── workon/           # Points tracking system
+└── utils.js          # Shared utilities
 ```
 
 ## Core Modules
