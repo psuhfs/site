@@ -102,16 +102,16 @@ function initializeTheme() {
 function setupThemeToggle() {
   const themeToggle = document.getElementById("themeToggle")
   if (!themeToggle) return
-  
+
   themeToggle.addEventListener("click", () => {
     document.documentElement.classList.toggle("dark-mode")
     document.body.classList.toggle("dark-mode")
     const isDark = document.body.classList.contains("dark-mode")
     localStorage.setItem("theme", isDark ? "dark" : "light")
-    
+
     // Track theme change if Analytics is available
     if (window.Analytics) {
-      Analytics.trackThemeChange(isDark ? "dark" : "light");
+      Analytics.trackThemeChange(isDark ? "dark" : "light")
     }
   })
 }

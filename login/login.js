@@ -1,14 +1,14 @@
 // Handle form submission
 document.addEventListener("DOMContentLoaded", async () => {
   // Track page view
-  Analytics.pageView('Login');
-  
+  Analytics.pageView("Login")
+
   // Password visibility toggle
   const toggleButtons = document.querySelectorAll(".toggle-password")
 
   toggleButtons.forEach((button) => {
     button.addEventListener("click", () => {
-      Analytics.trackClick('password_visibility_toggle');
+      Analytics.trackClick("password_visibility_toggle")
       const targetId = button.getAttribute("data-target")
       const passwordInput = document.getElementById(targetId)
       const eyeIcon = button.querySelector(".eye-icon")
@@ -77,22 +77,22 @@ function submitHandler(isServerHealthy) {
 
       const data = await response.json()
       if (!response.ok) {
-        Analytics.trackFormSubmit('login_form', false, { error: 'Invalid credentials' });
+        Analytics.trackFormSubmit("login_form", false, {error: "Invalid credentials"})
         alert("Invalid credentials")
       } else {
         setToken(data["token"])
-        
+
         // Identify user in PostHog
         Analytics.identifyUser(username, {
           username: username,
-          login_time: new Date().toISOString()
-        });
-        
-        Analytics.trackFormSubmit('login_form', true, { username: username });
+          login_time: new Date().toISOString(),
+        })
+
+        Analytics.trackFormSubmit("login_form", true, {username: username})
         navigate(next)
       }
     } catch (error) {
-      Analytics.trackError('login_error', error.message);
+      Analytics.trackError("login_error", error.message)
       alert("Something went wrong, please try again. If the problem persists, please contact support.")
       console.error("Login error:", error)
     }
