@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dashboard - PSU</title>
     <link rel="stylesheet" href="../assets/css/dashboard.css" />
+    <script src="../posthog-config.js"></script>
     <script src="../utils.js"></script>
   </head>
   <body>
@@ -18,7 +19,7 @@
           </div>
         </div>
         <div class="header-actions">
-          <button id="themeToggle" class="btn-theme-toggle" aria-label="Toggle theme">
+          <button id="themeToggle" class="btn-theme-toggle" aria-label="Toggle theme" onclick="Analytics.trackClick('theme_toggle')">
             <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <circle cx="12" cy="12" r="5"></circle>
               <line x1="12" y1="1" x2="12" y2="3"></line>
@@ -114,7 +115,7 @@
               </li>
             </ul>
           </div>
-          <button class="card-btn stockon-btn" onclick="window.location.href='/stockon'">
+          <button class="card-btn stockon-btn" onclick="Analytics.trackCardClick('StockOn'); window.location.href='/stockon'">
             Open StockOn
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -187,7 +188,7 @@
               </li>
             </ul>
           </div>
-          <button class="card-btn workon-btn" onclick="window.location.href='/workon'">
+          <button class="card-btn workon-btn" onclick="Analytics.trackCardClick('WorkOn'); window.location.href='/workon'">
             Open WorkOn
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -433,6 +434,9 @@
 
     <script>
       function handleLogout() {
+        // Track logout event
+        Analytics.trackLogout();
+        
         // Clear token
         document.cookie = "token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;"
         // Redirect to login
@@ -441,11 +445,13 @@
 
       // Modal functions
       function openSignupModal() {
+        Analytics.trackModal('open', 'signup_modal');
         document.getElementById("signupModal").style.display = "flex"
         document.body.style.overflow = "hidden"
       }
 
       function closeSignupModal() {
+        Analytics.trackModal('close', 'signup_modal');
         document.getElementById("signupModal").style.display = "none"
         document.body.style.overflow = "auto"
       }
@@ -520,6 +526,9 @@
 
       // Initialize
       document.addEventListener("DOMContentLoaded", async () => {
+        // Track page view
+        Analytics.pageView('Dashboard');
+        
         // Check authentication first
         if (!document.cookie.includes("token")) {
           alert("You must be logged in to access this page.")
@@ -600,6 +609,7 @@
           e.preventDefault()
 
           if (password.value !== "temp" && password.value !== confirmPassword.value) {
+            Analytics.trackError('validation_error', 'Passwords do not match');
             alert("Passwords do not match!")
             return
           }
@@ -622,13 +632,20 @@
             )
             
             if (!response.ok) {
+              Analytics.trackFormSubmit('signup_form', false, { error: 'API error' });
               alert("Something went wrong. Please try again.")
             } else {
+              Analytics.trackFormSubmit('signup_form', true, { 
+                username: username.value,
+                zones_count: zonalAccess.length,
+                stock_access_count: stockonAccess.length
+              });
               showSuccessModal()
               resetSignupForm()
             }
           } catch (error) {
             console.error("Signup error:", error)
+            Analytics.trackError('signup_error', error.message);
             alert("An error occurred. Please try again.")
           }
         })

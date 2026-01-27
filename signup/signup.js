@@ -1,10 +1,14 @@
 // Handle form submission
 document.addEventListener("DOMContentLoaded", async () => {
+  // Track page view
+  Analytics.pageView('Signup');
+  
   // Password visibility toggle
   const toggleButtons = document.querySelectorAll(".toggle-password")
 
   toggleButtons.forEach((button) => {
     button.addEventListener("click", () => {
+      Analytics.trackClick('password_visibility_toggle');
       const targetId = button.getAttribute("data-target")
       const passwordInput = document.getElementById(targetId)
       const eyeIcon = button.querySelector(".eye-icon")
@@ -60,6 +64,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // Basic validation
     if (password.value !== "temp" && password.value !== confirmPassword.value) {
+      Analytics.trackError('validation_error', 'Passwords do not match');
       alert("Passwords do not match!")
       return
     }
@@ -79,12 +84,19 @@ document.addEventListener("DOMContentLoaded", async () => {
         }),
       )
       if (!response.ok) {
+        Analytics.trackFormSubmit('signup_form', false, { error: 'API error' });
         alert("Something went wrong. Please try again.")
       } else {
+        Analytics.trackFormSubmit('signup_form', true, { 
+          username: username.value,
+          zones_count: zonalAccess.length,
+          stock_access_count: stockonAccess.length
+        });
         showSuccessModal()
       }
     } catch (error) {
       console.error("Signup error:", error)
+      Analytics.trackError('signup_error', error.message);
       // Handle error appropriately
     }
   })
@@ -124,6 +136,7 @@ function handleAccessLevels(zoneList, stockOnList) {
 }
 
 function showSuccessModal() {
+  Analytics.trackModal('open', 'success_modal');
   const modal = document.getElementById("successModal")
   const closeModalBtn = document.getElementById("closeModalBtn")
   const createAnotherBtn = document.getElementById("createAnotherBtn")
@@ -132,11 +145,13 @@ function showSuccessModal() {
 
   // Close modal and stay on page
   closeModalBtn.addEventListener("click", () => {
+    Analytics.trackModal('close', 'success_modal');
     modal.style.display = "none"
   })
 
   // Create another account - reset form
   createAnotherBtn.addEventListener("click", () => {
+    Analytics.trackClick('create_another_account');
     modal.style.display = "none"
     resetForm()
   })
